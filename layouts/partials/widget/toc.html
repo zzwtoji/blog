@@ -1,12 +1,167 @@
 {{ if (.Context.Scratch.Get "TOCEnabled") }}
-    <section class="widget archives">
-        <div class="widget-icon">
-            {{ partial "helper/icon" "hash" }}
-        </div>
-        <h2 class="widget-title section-title">{{ T "article.tableOfContents" }}</h2>
-        
-        <div class="widget--toc">
-            {{ .Context.TableOfContents }}
-        </div>
-    </section>
+<!-- 移动端目录按钮 -->
+<button id="toggle-toc" class="mobile-only">Toc</button>
+<section class="widget archives" id="toc-container">
+    <div class="widget-icon">
+        {{ partial "helper/icon" "hash" }}
+    </div>
+    <h2 class="widget-title section-title">{{ T "article.tableOfContents" }}</h2>
+
+    <div class="widget--toc">
+        {{ .Context.TableOfContents }}
+    </div>
+</section>
 {{ end }}
+
+<style>
+    .container {
+        .right-sidebar {
+            /* flex 布局显示移动端目录按钮 */
+            display: flex;
+        }
+    }
+
+    /* 默认隐藏移动端目录元素，电脑端将覆盖显示 */
+    .mobile-only {
+        display: none !important;
+    }
+
+    #toc-container {
+        /* 初始时不再隐藏目录，电脑端默认显示，移动端会被覆盖隐藏 */
+        /* display: none;  */
+        position: fixed;
+        /* 使用固定定位，使其固定在视口中 */
+        bottom: 21%;
+        /* 距离视口顶部的距离 */
+        right: 60px;
+        /* 距离视口右侧的距离 */
+        background-color: var(--card-background);
+        /* 可选：设置背景颜色 */
+        padding: 10px;
+        /* 可选：添加一些内边距 */
+        border: 1px solid #96979a50;
+        border-radius: var(--card-border-radius);
+        /* 可选：添加边框样式 */
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        /* 可选：设置 z-index 以确保它显示在其他元素之上 */
+        z-index: 9998 !important;
+        /* 设置最大高度为视口高度的 75% */
+        max-height: 75vh;
+        overflow-y: auto;
+        /* 让容器的宽度自适应内容 */
+        width: auto;
+        max-width: 290px;
+    }
+
+    #toggle-toc {
+        position: fixed;
+        bottom: 22%;
+        right: 20px;
+        padding: 10px 10px;
+        z-index: 9998 !important;
+        border: 0px solid #96979a50;
+        border-radius: 7px;
+        box-shadow: var(--shadow-l1);
+        background-color: #00640010;
+        color: #34495e;
+        /* 确保按钮在其他元素之上 */
+        display: none;
+        /* 初始时在电脑端也隐藏按钮，移动端通过媒体查询显示 */
+        margin-bottom: -20px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .widget--toc #TableOfContents {
+        overflow-x: auto;
+        max-height: 66vh;
+        width: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+        .mobile-only {
+            display: block !important;
+            /* 移动端显示 'Toc' 按钮 */
+        }
+
+        #toc-container {
+            display: none;
+            /* 移动端依旧隐藏目录容器，通过按钮显示 */
+        }
+
+        #toggle-toc {
+            display: block;
+            /* 移动端显示 toggle 按钮 */
+            bottom: 100px;
+            /* 移动端按钮位置调整 */
+        }
+    }
+
+    /* 电脑端样式：屏幕宽度大于 768px 时应用 */
+    @media screen and (min-width: 769px) {
+        #toc-container {
+            display: block !important;
+            /* 电脑端默认显示目录容器 */
+            position: static;
+            /* 移除固定定位，让目录在正常文档流中 */
+            border: none;
+            /* 移除边框 */
+            box-shadow: none;
+            /* 移除阴影 */
+            max-height: none;
+            /* 移除最大高度限制 */
+            overflow-y: visible;
+            /* 移除垂直滚动条 */
+            margin-top: 20px;
+            /* 可以根据需要添加一些顶部外边距，与页面内容区隔开 */
+            right: auto;
+            /* 重置 right 属性 */
+            bottom: auto;
+            /* 重置 bottom 属性 */
+            width: auto;
+            /* 宽度自适应内容 */
+            max-width: 100%;
+            /* 最大宽度可以设置为 100% 或您需要的宽度 */
+            background-color: transparent;
+            /* 背景色透明，或者设置为您想要的颜色 */
+            padding: 0;
+            /* 移除内边距 */
+        }
+
+        #toggle-toc {
+            display: none !important;
+            /* 电脑端隐藏 'Toc' 按钮 */
+        }
+    }
+</style>
+<script>
+    var toggleButton = document.getElementById('toggle-toc');
+    var tocContainer = document.getElementById('toc-container');
+
+    // 添加点击事件：切换目录的显示状态
+    toggleButton.addEventListener('click', function () {
+        if (tocContainer.style.display === 'none' || tocContainer.style.display === '') {
+            tocContainer.style.display = 'block';
+        } else {
+            tocContainer.style.display = 'none';
+        }
+    });
+
+    // 当鼠标悬浮在按钮上时显示目录
+    toggleButton.addEventListener('mouseover', function () {
+        // if (window.innerWidth <= 768) { // 仅在移动端悬浮显示
+        tocContainer.style.display = 'block';
+        // }
+    });
+
+    // 添加点击页面空白处的事件处理程序
+    document.addEventListener('click', function (event) {
+        // if (window.innerWidth <= 768) { // 仅在移动端点击空白处隐藏
+        // 检查点击事件是否发生在目录容器之外，并且不是按钮本身
+        if (!tocContainer.contains(event.target) && event.target !== toggleButton) {
+            // 点击发生在目录容器之外，隐藏目录容器
+            tocContainer.style.display = 'none';
+        }
+        // }
+    });
+</script>

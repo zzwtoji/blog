@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>编译原理 on zzw</title>
+        <link>https://megumi8821.netlify.app/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/</link>
+        <description>Recent content in 编译原理 on zzw</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>megumi8821</copyright>
+        <lastBuildDate>Sun, 23 Nov 2025 16:24:33 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Principleofcompile</title>
+        <link>https://megumi8821.netlify.app/p/principleofcompile/</link>
+        <pubDate>Sun, 23 Nov 2025 16:24:33 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/principleofcompile/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

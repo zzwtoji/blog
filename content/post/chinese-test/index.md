@@ -7,8 +7,6 @@ image: helena-hertz-wWZzXlDpMog-unsplash.jpg
 categories:
   - Test
   - 测试
-tags:
-  - 编译原理
 ---
 
 ## 正文测试
