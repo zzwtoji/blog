@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。\n应用层 直接面向用户，提供各类网络应用服务。\n功能 定义应用程序间的通信规则。 处理数据格式。 管理会话，协调通信双方的交互逻辑。 管理什么会话 端到端交互链路 交互状态 如何管理 建立会话 维护会话 终止会话 关键协议 HTTP/HTTPS：网页传输协议 SMTP：邮件传输协议 FTP：文件传输协议 DNS：域名解析协议 运输层 负责将应用层的数据打包后，通过端口号定位到目标设备的具体应用，实现端到端的可靠传输。\n功能 建立端到端的联系 选择传输方式 可靠传输 不可靠传输 处理流量控制和拥塞控制 通过端口号识别目标应用 关键协议 TCP：传输控制协议 可靠、面向连接：传输前必须先进行三次握手，传输过程中确认数据是否送达、重传丢失的数据，并通过窗口机制控制流量和拥塞。\n适用于对数据可靠性有较高要求的场景：\n网页加载 文件下载 邮件发送 三次握手 客户端发送 SYN 包请求连接 服务器响应 SYN-ACK 包，表示同意连接 客户端发送 ACK 包，确认连接建立 四次挥手 客户端发送 FIN=1（请求断开），ACK=1（确认之前的数据），序号=X。 服务器回复 ACK=1（确认收到断开请求），序号=Y，确认号=X+1。 服务器发送 FIN=1（请求断开），ACK=1（确认之前的数据），序号=Z，确认号=X+1。 客户端回复 ACK=1（确认收到断开请求），序号=X+1，确认号=Z+1。 序号 标记发送方当前发送数据的字节位置，确保接收方按序重组数据。 TCP 连接建立时，双方会随机生成初始序号（ISN），避免因旧连接的残留报文干扰。 序号值=初始序号+已发送字节数 确认号 确认号值=期望接收的下一个字节序号=已接收字节的最后序号+1 确认号仅在 ACK 标志位为 1 时有效。 窗口 实现流量控制和拥塞控制，防止发送方发送过多数据淹没接收方。 窗口值存储在 TCP 头部的窗口字段中，单位为字节，基于接收方缓冲区动态调整。 发送方需确保：未确认的数据总量 ≤ 接收方告知的窗口值 标志位 SYN（Synchronize）：同步序号，用于建立连接。 ACK（Acknowledgment）：确认标志，表示报文包含确认号。 FIN（Finish）：结束标志，用于终止连接。 RST（Reset）：复位标志，用于处理异常情况，强制断开连接。 PSH（Push）：推送标志，要求接收方立即将数据交给应用层。 URG（Urgent）：紧急标志，表示报文中有紧急数据，需要优先处理。 UDP：用户数据报协议 无连接、不可靠、低延迟：传输前不需要建立连接，发送后不确认数据是否送达，无流量控制和拥塞控制，但传输速度快、开销小。\n">
+<title>五层模型</title>
+
+<link rel='canonical' href='https://megumi8821.netlify.app/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/'>
+
+<link rel="stylesheet" href="/scss/style.min.c59e8b1a23ea91bdf7ddd5643e37450fb38223ce4ff7d7578155dcd45e903791.css"><meta property='og:title' content="五层模型">
+<meta property='og:description' content="五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。\n应用层 直接面向用户，提供各类网络应用服务。\n功能 定义应用程序间的通信规则。 处理数据格式。 管理会话，协调通信双方的交互逻辑。 管理什么会话 端到端交互链路 交互状态 如何管理 建立会话 维护会话 终止会话 关键协议 HTTP/HTTPS：网页传输协议 SMTP：邮件传输协议 FTP：文件传输协议 DNS：域名解析协议 运输层 负责将应用层的数据打包后，通过端口号定位到目标设备的具体应用，实现端到端的可靠传输。\n功能 建立端到端的联系 选择传输方式 可靠传输 不可靠传输 处理流量控制和拥塞控制 通过端口号识别目标应用 关键协议 TCP：传输控制协议 可靠、面向连接：传输前必须先进行三次握手，传输过程中确认数据是否送达、重传丢失的数据，并通过窗口机制控制流量和拥塞。\n适用于对数据可靠性有较高要求的场景：\n网页加载 文件下载 邮件发送 三次握手 客户端发送 SYN 包请求连接 服务器响应 SYN-ACK 包，表示同意连接 客户端发送 ACK 包，确认连接建立 四次挥手 客户端发送 FIN=1（请求断开），ACK=1（确认之前的数据），序号=X。 服务器回复 ACK=1（确认收到断开请求），序号=Y，确认号=X+1。 服务器发送 FIN=1（请求断开），ACK=1（确认之前的数据），序号=Z，确认号=X+1。 客户端回复 ACK=1（确认收到断开请求），序号=X+1，确认号=Z+1。 序号 标记发送方当前发送数据的字节位置，确保接收方按序重组数据。 TCP 连接建立时，双方会随机生成初始序号（ISN），避免因旧连接的残留报文干扰。 序号值=初始序号+已发送字节数 确认号 确认号值=期望接收的下一个字节序号=已接收字节的最后序号+1 确认号仅在 ACK 标志位为 1 时有效。 窗口 实现流量控制和拥塞控制，防止发送方发送过多数据淹没接收方。 窗口值存储在 TCP 头部的窗口字段中，单位为字节，基于接收方缓冲区动态调整。 发送方需确保：未确认的数据总量 ≤ 接收方告知的窗口值 标志位 SYN（Synchronize）：同步序号，用于建立连接。 ACK（Acknowledgment）：确认标志，表示报文包含确认号。 FIN（Finish）：结束标志，用于终止连接。 RST（Reset）：复位标志，用于处理异常情况，强制断开连接。 PSH（Push）：推送标志，要求接收方立即将数据交给应用层。 URG（Urgent）：紧急标志，表示报文中有紧急数据，需要优先处理。 UDP：用户数据报协议 无连接、不可靠、低延迟：传输前不需要建立连接，发送后不确认数据是否送达，无流量控制和拥塞控制，但传输速度快、开销小。\n">
+<meta property='og:url' content='https://megumi8821.netlify.app/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/'>
+<meta property='og:site_name' content='zzw'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-11-23T16:59:31&#43;08:00'/><meta property='article:modified_time' content='2025-11-23T16:59:31&#43;08:00'/>
+<meta name="twitter:title" content="五层模型">
+<meta name="twitter:description" content="五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。\n应用层 直接面向用户，提供各类网络应用服务。\n功能 定义应用程序间的通信规则。 处理数据格式。 管理会话，协调通信双方的交互逻辑。 管理什么会话 端到端交互链路 交互状态 如何管理 建立会话 维护会话 终止会话 关键协议 HTTP/HTTPS：网页传输协议 SMTP：邮件传输协议 FTP：文件传输协议 DNS：域名解析协议 运输层 负责将应用层的数据打包后，通过端口号定位到目标设备的具体应用，实现端到端的可靠传输。\n功能 建立端到端的联系 选择传输方式 可靠传输 不可靠传输 处理流量控制和拥塞控制 通过端口号识别目标应用 关键协议 TCP：传输控制协议 可靠、面向连接：传输前必须先进行三次握手，传输过程中确认数据是否送达、重传丢失的数据，并通过窗口机制控制流量和拥塞。\n适用于对数据可靠性有较高要求的场景：\n网页加载 文件下载 邮件发送 三次握手 客户端发送 SYN 包请求连接 服务器响应 SYN-ACK 包，表示同意连接 客户端发送 ACK 包，确认连接建立 四次挥手 客户端发送 FIN=1（请求断开），ACK=1（确认之前的数据），序号=X。 服务器回复 ACK=1（确认收到断开请求），序号=Y，确认号=X+1。 服务器发送 FIN=1（请求断开），ACK=1（确认之前的数据），序号=Z，确认号=X+1。 客户端回复 ACK=1（确认收到断开请求），序号=X+1，确认号=Z+1。 序号 标记发送方当前发送数据的字节位置，确保接收方按序重组数据。 TCP 连接建立时，双方会随机生成初始序号（ISN），避免因旧连接的残留报文干扰。 序号值=初始序号+已发送字节数 确认号 确认号值=期望接收的下一个字节序号=已接收字节的最后序号+1 确认号仅在 ACK 标志位为 1 时有效。 窗口 实现流量控制和拥塞控制，防止发送方发送过多数据淹没接收方。 窗口值存储在 TCP 头部的窗口字段中，单位为字节，基于接收方缓冲区动态调整。 发送方需确保：未确认的数据总量 ≤ 接收方告知的窗口值 标志位 SYN（Synchronize）：同步序号，用于建立连接。 ACK（Acknowledgment）：确认标志，表示报文包含确认号。 FIN（Finish）：结束标志，用于终止连接。 RST（Reset）：复位标志，用于处理异常情况，强制断开连接。 PSH（Push）：推送标志，要求接收方立即将数据交给应用层。 URG（Urgent）：紧急标志，表示报文中有紧急数据，需要优先处理。 UDP：用户数据报协议 无连接、不可靠、低延迟：传输前不需要建立连接，发送后不确认数据是否送达，无流量控制和拥塞控制，但传输速度快、开销小。\n">
+    </head>
+    <body class="
+article-page
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f0d44921c134bf3a.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zzw</a></h1>
+            <h2 class="site-description">megumi8821</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+<aside class="sidebar right-sidebar sticky">
+        
+            
+                
+
+<button id="toggle-toc" class="mobile-only">Toc</button>
+<section class="widget archives" id="toc-container">
+    <div class="widget-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+    </div>
+    <h2 class="widget-title section-title">目录</h2>
+
+    <div class="widget--toc">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#应用层">应用层</a>
+      <ol>
+        <li><a href="#功能">功能</a></li>
+        <li><a href="#关键协议">关键协议</a></li>
+      </ol>
+    </li>
+    <li><a href="#运输层">运输层</a>
+      <ol>
+        <li><a href="#功能-1">功能</a></li>
+        <li><a href="#关键协议-1">关键协议</a>
+          <ol>
+            <li><a href="#tcp传输控制协议">TCP：传输控制协议</a></li>
+            <li><a href="#udp用户数据报协议">UDP：用户数据报协议</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#网络层">网络层</a>
+      <ol>
+        <li><a href="#功能-2">功能</a></li>
+        <li><a href="#关键协议-2">关键协议</a>
+          <ol>
+            <li><a href="#ip网际协议">IP：网际协议</a></li>
+            <li><a href="#icmp互联网控制报文协议">ICMP：互联网控制报文协议</a></li>
+            <li><a href="#路由协议">路由协议</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#链路层">链路层</a>
+      <ol>
+        <li><a href="#功能-3">功能</a></li>
+        <li><a href="#关键协议与设备">关键协议与设备</a></li>
+      </ol>
+    </li>
+    <li><a href="#物理层">物理层</a>
+      <ol>
+        <li><a href="#功能-4">功能</a></li>
+        <li><a href="#关键概念">关键概念</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    </div>
+</section>
+
+
+<style>
+    .container {
+        .right-sidebar {
+             
+            display: flex;
+        }
+    }
+
+     
+    .mobile-only {
+        display: none !important;
+    }
+
+    #toc-container {
+         
+         
+        position: fixed;
+         
+        bottom: 21%;
+         
+        right: 60px;
+         
+        background-color: var(--card-background);
+         
+        padding: 10px;
+         
+        border: 1px solid #96979a50;
+        border-radius: var(--card-border-radius);
+         
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+         
+        z-index: 9998 !important;
+         
+        max-height: 75vh;
+        overflow-y: auto;
+         
+        width: auto;
+        max-width: 290px;
+    }
+
+    #toggle-toc {
+        position: fixed;
+        bottom: 22%;
+        right: 20px;
+        padding: 10px 10px;
+        z-index: 9998 !important;
+        border: 0px solid #96979a50;
+        border-radius: 7px;
+        box-shadow: var(--shadow-l1);
+        background-color: #00640010;
+        color: #34495e;
+         
+        display: none;
+         
+        margin-bottom: -20px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .widget--toc #TableOfContents {
+        overflow-x: auto;
+        max-height: 66vh;
+        width: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+        .mobile-only {
+            display: block !important;
+             
+        }
+
+        #toc-container {
+            display: none;
+             
+        }
+
+        #toggle-toc {
+            display: block;
+             
+            bottom: 100px;
+             
+        }
+    }
+
+     
+    @media screen and (min-width: 769px) {
+        #toc-container {
+            display: block !important;
+             
+            position: static;
+             
+            border: none;
+             
+            box-shadow: none;
+             
+            max-height: none;
+             
+            overflow-y: visible;
+             
+            margin-top: 20px;
+             
+            right: auto;
+             
+            bottom: auto;
+             
+            width: auto;
+             
+            max-width: 100%;
+             
+            background-color: transparent;
+             
+            padding: 0;
+             
+        }
+
+        #toggle-toc {
+            display: none !important;
+             
+        }
+    }
+</style>
+<script>
+    var toggleButton = document.getElementById('toggle-toc');
+    var tocContainer = document.getElementById('toc-container');
+
+    
+    toggleButton.addEventListener('click', function () {
+        if (tocContainer.style.display === 'none' || tocContainer.style.display === '') {
+            tocContainer.style.display = 'block';
+        } else {
+            tocContainer.style.display = 'none';
+        }
+    });
+
+    
+    toggleButton.addEventListener('mouseover', function () {
+        
+        tocContainer.style.display = 'block';
+        
+    });
+
+    
+    document.addEventListener('click', function (event) {
+        
+        
+        if (!tocContainer.contains(event.target) && event.target !== toggleButton) {
+            
+            tocContainer.style.display = 'none';
+        }
+        
+    });
+</script>
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+<article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" >
+                计算机网络
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/">五层模型</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2025-11-23T16:59:31&#43;08:00'>2025-11-23</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。</p>
+<h2 id="应用层">应用层
+</h2><p>直接面向用户，提供各类网络应用服务。</p>
+<h3 id="功能">功能
+</h3><ul>
+<li>定义应用程序间的通信规则。</li>
+<li>处理数据格式。</li>
+<li>管理会话，协调通信双方的交互逻辑。
+<ul>
+<li>管理什么会话
+<ul>
+<li>端到端交互链路</li>
+<li>交互状态</li>
+</ul>
+</li>
+<li>如何管理
+<ul>
+<li>建立会话</li>
+<li>维护会话</li>
+<li>终止会话</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="关键协议">关键协议
+</h3><ul>
+<li>HTTP/HTTPS：网页传输协议</li>
+<li>SMTP：邮件传输协议</li>
+<li>FTP：文件传输协议</li>
+<li>DNS：域名解析协议</li>
+</ul>
+<h2 id="运输层">运输层
+</h2><p>负责将应用层的数据打包后，通过端口号定位到目标设备的具体应用，实现端到端的可靠传输。</p>
+<h3 id="功能-1">功能
+</h3><ul>
+<li>建立端到端的联系</li>
+<li>选择传输方式
+<ul>
+<li>可靠传输</li>
+<li>不可靠传输</li>
+</ul>
+</li>
+<li>处理流量控制和拥塞控制</li>
+<li>通过端口号识别目标应用</li>
+</ul>
+<h3 id="关键协议-1">关键协议
+</h3><h4 id="tcp传输控制协议">TCP：传输控制协议
+</h4><p>可靠、面向连接：传输前必须先进行三次握手，传输过程中确认数据是否送达、重传丢失的数据，并通过窗口机制控制流量和拥塞。</p>
+<p>适用于对数据可靠性有较高要求的场景：</p>
+<ul>
+<li>网页加载</li>
+<li>文件下载</li>
+<li>邮件发送</li>
+</ul>
+<h5 id="三次握手">三次握手
+</h5><ol>
+<li>客户端发送 <code>SYN</code> 包请求连接</li>
+<li>服务器响应 <code>SYN-ACK</code> 包，表示同意连接</li>
+<li>客户端发送 <code>ACK</code> 包，确认连接建立</li>
+</ol>
+<h5 id="四次挥手">四次挥手
+</h5><ol>
+<li>客户端发送 <code>FIN=1</code>（请求断开），<code>ACK=1</code>（确认之前的数据），序号=<code>X</code>。</li>
+<li>服务器回复 <code>ACK=1</code>（确认收到断开请求），序号=<code>Y</code>，确认号=<code>X+1</code>。</li>
+<li>服务器发送 <code>FIN=1</code>（请求断开），<code>ACK=1</code>（确认之前的数据），序号=<code>Z</code>，确认号=<code>X+1</code>。</li>
+<li>客户端回复 <code>ACK=1</code>（确认收到断开请求），序号=<code>X+1</code>，确认号=<code>Z+1</code>。</li>
+</ol>
+<h5 id="序号">序号
+</h5><ul>
+<li>标记发送方当前发送数据的字节位置，确保接收方按序重组数据。</li>
+<li>TCP 连接建立时，双方会随机生成初始序号（ISN），避免因旧连接的残留报文干扰。</li>
+<li>序号值=初始序号+已发送字节数</li>
+</ul>
+<h5 id="确认号">确认号
+</h5><ul>
+<li>确认号值=期望接收的下一个字节序号=已接收字节的最后序号+1</li>
+<li>确认号仅在 ACK 标志位为 1 时有效。</li>
+</ul>
+<h5 id="窗口">窗口
+</h5><ul>
+<li>实现流量控制和拥塞控制，防止发送方发送过多数据淹没接收方。</li>
+<li>窗口值存储在 TCP 头部的窗口字段中，单位为字节，基于接收方缓冲区动态调整。</li>
+<li>发送方需确保：未确认的数据总量 ≤ 接收方告知的窗口值</li>
+</ul>
+<h5 id="标志位">标志位
+</h5><ul>
+<li>SYN（Synchronize）：同步序号，用于建立连接。</li>
+<li>ACK（Acknowledgment）：确认标志，表示报文包含确认号。</li>
+<li>FIN（Finish）：结束标志，用于终止连接。</li>
+<li>RST（Reset）：复位标志，用于处理异常情况，强制断开连接。</li>
+<li>PSH（Push）：推送标志，要求接收方立即将数据交给应用层。</li>
+<li>URG（Urgent）：紧急标志，表示报文中有紧急数据，需要优先处理。</li>
+</ul>
+<h4 id="udp用户数据报协议">UDP：用户数据报协议
+</h4><p>无连接、不可靠、低延迟：传输前不需要建立连接，发送后不确认数据是否送达，无流量控制和拥塞控制，但传输速度快、开销小。</p>
+<p>适用于对延迟敏感、能容忍少量丢包的场景：</p>
+<ul>
+<li>视频通话</li>
+<li>DNS 查询</li>
+<li>直播</li>
+</ul>
+<h2 id="网络层">网络层
+</h2><p>将传输层的数据包从源设备发送到目标设备。</p>
+<h3 id="功能-2">功能
+</h3><ul>
+<li>定义设备的 IP 地址。</li>
+<li>当数据包超过网络的最大传输单元 MTU（Maximum Transmission Unit，一次能传输的最大数据块大小）时，拆分成小片段传输，到达目标后再重组。</li>
+<li>通过路由协议选择最优传输路径。</li>
+<li>处理网络差错。
+<ul>
+<li>数据丢失。</li>
+<li>数据损坏。</li>
+<li>数据重复。</li>
+<li>数据失序。</li>
+<li>延迟超限。</li>
+</ul>
+</li>
+</ul>
+<h3 id="关键协议-2">关键协议
+</h3><h4 id="ip网际协议">IP：网际协议
+</h4><p>负责给每个设备分配唯一的 IP 地址，并指导数据包在网络中传输。</p>
+<ul>
+<li>IPv4：32 位地址。</li>
+<li>IPv6：128 位地址。</li>
+<li>TTL（Time To Live，生存时间）：防止数据包在网络中无限循环，通过每经过一个路由器，TTL 值减 1，直到为 0 时丢弃数据包。</li>
+</ul>
+<h4 id="icmp互联网控制报文协议">ICMP：互联网控制报文协议
+</h4><p>辅助 IP 协议，用于发送网络差错报文和测试网络连通性。</p>
+<ul>
+<li><code>ping</code> 命令就是基于 ICMP 的请求/响应报文实现的。</li>
+</ul>
+<h4 id="路由协议">路由协议
+</h4><p>用于路由器之间交换路由信息，选择最佳路径传输数据包。</p>
+<ul>
+<li>OSPF：内部网关协议，用于同一公司/机构内部的路由选择。</li>
+<li>BGP：外部网关协议，用于不同运营商之间的路由选择。</li>
+</ul>
+<h2 id="链路层">链路层
+</h2><p>在同一个局域网内，将网络层的 IP 数据包封装成帧，通过 MAC（Media Access Control，媒体访问控制）地址定位到目标设备，实现点对点的传输。</p>
+<h3 id="功能-3">功能
+</h3><ul>
+<li>定义物理地址（MAC 地址），每个网卡的 MAC 地址全球唯一。</li>
+<li>将 IP 数据包封装成以太网帧，添加帧头和帧尾信息，帧头包含源 MAC 地址和目标 MAC 地址，帧尾包含校验信息。</li>
+<li>处理帧的检验，通过帧尾的 FCS（Frame Check Sequence，帧校验序列）字段检查帧在传输过程中是否损坏，损坏则丢弃。</li>
+<li>管理局域网内的设备接入。</li>
+</ul>
+<h3 id="关键协议与设备">关键协议与设备
+</h3><ul>
+<li>MAC 地址：6 字节的物理地址，用于局域网内识别设备。</li>
+<li>以太网帧：局域网内传输的数据单元，包含帧头、数据和帧尾。</li>
+<li>ARP（Address Resolution Protocol，地址解析协议）：将 IP 地址映射到 MAC 地址。</li>
+<li>交换机：根据 MAC 地址转发以太网帧，只将帧发送到目标 MAC 对应的端口。</li>
+<li>链路层协议
+<ul>
+<li>PPP（Point-to-Point Protocol，点对点协议）：用于点对点连接的数据链路层协议，常用于拨号上网。</li>
+<li>802.11（无线局域网协议）：定义无线局域网的链路层标准。</li>
+</ul>
+</li>
+</ul>
+<h2 id="物理层">物理层
+</h2><p>将帧转换成比特流，通过物理介质传输。</p>
+<h3 id="功能-4">功能
+</h3><ul>
+<li>定义物理介质的电气、光学和无线特性。</li>
+<li>处理比特流的传输。</li>
+<li>管理物理连接的时序。</li>
+<li>定义带宽。</li>
+</ul>
+<h3 id="关键概念">关键概念
+</h3><ul>
+<li>比特（bit）：数据的最小单位，表示为 0 或 1。</li>
+<li>物理介质
+<ul>
+<li>有线
+<ul>
+<li>双绞线</li>
+<li>光纤</li>
+</ul>
+</li>
+<li>无线
+<ul>
+<li>Wi-Fi</li>
+<li>蜂窝网络</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>信号
+<ul>
+<li>电信号
+<ul>
+<li>网线</li>
+</ul>
+</li>
+<li>光信号
+<ul>
+<li>光纤</li>
+</ul>
+</li>
+<li>无线信号
+<ul>
+<li>Wi-Fi</li>
+<li>蜂窝网络</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+
+
+
+
+
+<div class="pre-next">
+    
+            
+</div>
+
+
+
+
+
+<footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 megumi8821
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
