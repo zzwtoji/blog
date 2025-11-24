@@ -3,18 +3,57 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://megumi8821.netlify.app/</loc>
-    <lastmod>2025-11-23T16:59:31+08:00</lastmod>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
   </url><url>
     <loc>https://megumi8821.netlify.app/categories/</loc>
-    <lastmod>2025-11-23T16:59:31+08:00</lastmod>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
   </url><url>
     <loc>https://megumi8821.netlify.app/post/</loc>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/categories/softwareengineering/</loc>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/</loc>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/p/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</loc>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</loc>
+    <lastmod>2025-11-24T13:29:41+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/categories/computernetworks/</loc>
+    <lastmod>2025-11-24T09:05:14+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/http/</loc>
+    <lastmod>2025-11-24T09:05:14+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/p/http-%E4%B8%8E-tcpudp-%E7%9A%84%E5%B7%AE%E5%BC%82/</loc>
+    <lastmod>2025-11-24T09:05:14+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/tcp/</loc>
+    <lastmod>2025-11-24T09:05:14+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/udp/</loc>
+    <lastmod>2025-11-24T09:05:14+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/%E9%93%BE%E8%B7%AF%E5%B1%82/</loc>
     <lastmod>2025-11-23T16:59:31+08:00</lastmod>
   </url><url>
-    <loc>https://megumi8821.netlify.app/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
+    <loc>https://megumi8821.netlify.app/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/</loc>
     <lastmod>2025-11-23T16:59:31+08:00</lastmod>
   </url><url>
     <loc>https://megumi8821.netlify.app/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2025-11-23T16:59:31+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/%E7%89%A9%E7%90%86%E5%B1%82/</loc>
+    <lastmod>2025-11-23T16:59:31+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/%E5%BA%94%E7%94%A8%E5%B1%82/</loc>
+    <lastmod>2025-11-23T16:59:31+08:00</lastmod>
+  </url><url>
+    <loc>https://megumi8821.netlify.app/tags/%E8%BF%90%E8%BE%93%E5%B1%82/</loc>
     <lastmod>2025-11-23T16:59:31+08:00</lastmod>
   </url><url>
     <loc>https://megumi8821.netlify.app/page/</loc>
@@ -22,8 +61,6 @@
   </url><url>
     <loc>https://megumi8821.netlify.app/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://megumi8821.netlify.app/tags/</loc>
   </url><url>
     <loc>https://megumi8821.netlify.app/categories/test/</loc>
   </url><url>

@@ -6,6 +6,79 @@
         <description>Recent content in Tags on zzw</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
-        <copyright>megumi8821</copyright><atom:link href="https://megumi8821.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>megumi8821</copyright>
+        <lastBuildDate>Mon, 24 Nov 2025 13:29:41 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>生命周期</title>
+        <link>https://megumi8821.netlify.app/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
+        <pubDate>Mon, 24 Nov 2025 13:29:41 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>HTTP</title>
+        <link>https://megumi8821.netlify.app/tags/http/</link>
+        <pubDate>Mon, 24 Nov 2025 09:05:14 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/http/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>TCP</title>
+        <link>https://megumi8821.netlify.app/tags/tcp/</link>
+        <pubDate>Mon, 24 Nov 2025 09:05:14 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/tcp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>UDP</title>
+        <link>https://megumi8821.netlify.app/tags/udp/</link>
+        <pubDate>Mon, 24 Nov 2025 09:05:14 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/udp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>链路层</title>
+        <link>https://megumi8821.netlify.app/tags/%E9%93%BE%E8%B7%AF%E5%B1%82/</link>
+        <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>网络层</title>
+        <link>https://megumi8821.netlify.app/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/</link>
+        <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>物理层</title>
+        <link>https://megumi8821.netlify.app/tags/%E7%89%A9%E7%90%86%E5%B1%82/</link>
+        <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E7%89%A9%E7%90%86%E5%B1%82/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>应用层</title>
+        <link>https://megumi8821.netlify.app/tags/%E5%BA%94%E7%94%A8%E5%B1%82/</link>
+        <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E5%BA%94%E7%94%A8%E5%B1%82/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>运输层</title>
+        <link>https://megumi8821.netlify.app/tags/%E8%BF%90%E8%BE%93%E5%B1%82/</link>
+        <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E8%BF%90%E8%BE%93%E5%B1%82/</guid>
+        <description></description>
+        </item>
+        
     </channel>
 </rss>

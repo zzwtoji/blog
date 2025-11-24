@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>计算机网络 on zzw</title>
-        <link>https://megumi8821.netlify.app/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+        <link>http://localhost:1313/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
         <description>Recent content in 计算机网络 on zzw</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>megumi8821</copyright>
-        <lastBuildDate>Sun, 23 Nov 2025 16:59:31 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 23 Nov 2025 16:59:31 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>五层模型</title>
-        <link>https://megumi8821.netlify.app/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/</link>
+        <link>http://localhost:1313/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/</link>
         <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
         
-        <guid>https://megumi8821.netlify.app/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/</guid>
+        <guid>http://localhost:1313/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/</guid>
         <description>&lt;p&gt;五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。&lt;/p&gt;
 &lt;h2 id=&#34;应用层&#34;&gt;应用层
 &lt;/h2&gt;&lt;p&gt;直接面向用户，提供各类网络应用服务。&lt;/p&gt;
