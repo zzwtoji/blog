@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>PrincipleofCompile on zzw</title>
+        <link>https://megumi8821.netlify.app/categories/principleofcompile/</link>
+        <description>Recent content in PrincipleofCompile on zzw</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>megumi8821</copyright>
+        <lastBuildDate>Mon, 24 Nov 2025 16:27:37 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/categories/principleofcompile/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>正则表达式与词法分析</title>
+        <link>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</link>
+        <pubDate>Mon, 24 Nov 2025 16:27:37 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;nihao&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;hello_world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我是&lt;code&gt;var&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;niaao&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;nihao&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;词法分析：识别词法单元 Token。&lt;/p&gt;
+&lt;p&gt;正则表达式：正则文法的字符串表示形式。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;正则文法（3 型文法）
+&lt;ul&gt;
+&lt;li&gt;右线性文法：非终结符 → 终结符+非终结符或非终结符 → 终结符&lt;/li&gt;
+&lt;li&gt;左线性文法：非终结符 → 非终结符+终结符或非终结符 → 终结符&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;正则表达式运算&#34;&gt;正则表达式运算
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;连接运算（$AB$）：顺序强制，元素都要出现。&lt;/li&gt;
+&lt;li&gt;交替运算（$A|B$）：互斥选择，必须选一个。&lt;/li&gt;
+&lt;li&gt;闭包运算（$A^*$）：重复 0 次或多次。&lt;/li&gt;
+&lt;li&gt;可选运算（$A^?$）：最多出现一次，也可以不出现。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;有限自动机fa&#34;&gt;有限自动机（FA）
+&lt;/h2&gt;&lt;h3 id=&#34;nfanondeterministic-finite-automaton非确定性有限自动机&#34;&gt;NFA（Nondeterministic Finite Automaton，非确定性有限自动机）
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;NFA
+&lt;ul&gt;
+&lt;li&gt;状态集合（$S$）&lt;/li&gt;
+&lt;li&gt;输入符号集合（$\Sigma$）&lt;/li&gt;
+&lt;li&gt;状态转换函数（$\delta: S \times (\Sigma \cup \{\epsilon\}) \to 2^S$）&lt;/li&gt;
+&lt;li&gt;初始状态（$s_0$）&lt;/li&gt;
+&lt;li&gt;接受状态集合（$F$）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;thompsons-construction&#34;&gt;Thompson&amp;rsquo;s Construction
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;只处理 3 种核心运算和两种原子单元，覆盖所有正则表达式。&lt;/li&gt;
+&lt;li&gt;每一步组合都严格遵循固定规则，确保最终的 NFA 正确匹配正则表达式。&lt;/li&gt;
+&lt;li&gt;生成的 NFA 可能包含$\epsilon$转换。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;dfadeterministic-finite-automaton确定性有限自动机&#34;&gt;DFA（Deterministic Finite Automaton，确定性有限自动机）
+&lt;/h3&gt;&lt;h3 id=&#34;dfa-最小化&#34;&gt;DFA 最小化
+&lt;/h3&gt;</description>
+        </item>
+        <item>
+        <title>编译流程</title>
+        <link>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</link>
+        <pubDate>Mon, 24 Nov 2025 16:13:53 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</guid>
+        <description>&lt;h2 id=&#34;词法分析&#34;&gt;词法分析
+&lt;/h2&gt;&lt;p&gt;读取源程序字符流，按语言规则拆分为语法单元（Token）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Token
+&lt;ul&gt;
+&lt;li&gt;标识符（变量名、函数名）&lt;/li&gt;
+&lt;li&gt;关键字（if、for）&lt;/li&gt;
+&lt;li&gt;常量（数字、字符串）&lt;/li&gt;
+&lt;li&gt;运算符（+、-、*、/）&lt;/li&gt;
+&lt;li&gt;分隔符（,、;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：Token 序列&lt;/p&gt;
+&lt;h2 id=&#34;语法分析&#34;&gt;语法分析
+&lt;/h2&gt;&lt;p&gt;根据语言的语法规则，将 Token 序列组织成抽象语法树（AST，Abstract Syntax Tree）。&lt;/p&gt;
+&lt;p&gt;输出：抽象语法树（AST）或语法树&lt;/p&gt;
+&lt;h2 id=&#34;语义分析&#34;&gt;语义分析
+&lt;/h2&gt;&lt;p&gt;检查 AST 是否符合语言的语义规则，确保代码逻辑合法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;检查内容
+&lt;ul&gt;
+&lt;li&gt;类型匹配（整数和字符串不能直接相加、函数参数类型不匹配）&lt;/li&gt;
+&lt;li&gt;作用域检查（局部变量跨作用域访问）&lt;/li&gt;
+&lt;li&gt;标识符定义（使用未声明的变量、重复定义）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：标注语义信息的 AST&lt;/p&gt;
+&lt;h2 id=&#34;中间代码生成&#34;&gt;中间代码生成
+&lt;/h2&gt;&lt;p&gt;将语义正确的 AST 转换为中间代码（Intermediate Representation，IR），降低目标代码生成的复杂度。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常见中间代码形式
+&lt;ul&gt;
+&lt;li&gt;三地址码（Three-Address Code）&lt;/li&gt;
+&lt;li&gt;四元式&lt;/li&gt;
+&lt;li&gt;逆波兰式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：中间代码序列&lt;/p&gt;
+&lt;h2 id=&#34;中间代码优化&#34;&gt;中间代码优化
+&lt;/h2&gt;&lt;p&gt;对中间代码进行优化，提高代码执行效率，减少资源消耗。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化技术
+&lt;ul&gt;
+&lt;li&gt;常量折叠（Constant Folding）&lt;/li&gt;
+&lt;li&gt;死代码消除（Dead Code Elimination）&lt;/li&gt;
+&lt;li&gt;循环优化（Loop Optimization）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：优化后的中间代码&lt;/p&gt;
+&lt;h2 id=&#34;目标代码生成&#34;&gt;目标代码生成
+&lt;/h2&gt;&lt;p&gt;将中间代码转换为目标机器代码（Machine Code）或汇编代码，再通过汇编器转化为机器指令。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;操作
+&lt;ul&gt;
+&lt;li&gt;指令选择&lt;/li&gt;
+&lt;li&gt;寄存器分配&lt;/li&gt;
+&lt;li&gt;指令调度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：目标机器的汇编代码或二进制目标文件&lt;/p&gt;
+&lt;h2 id=&#34;目标代码优化&#34;&gt;目标代码优化
+&lt;/h2&gt;&lt;p&gt;对生成的目标代码进行进一步优化，提高执行效率和减少内存占用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化技术
+&lt;ul&gt;
+&lt;li&gt;指令重排&lt;/li&gt;
+&lt;li&gt;寄存器复用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：优化后的目标代码&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

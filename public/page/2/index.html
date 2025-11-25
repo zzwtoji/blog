@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head>
+	<meta name="generator" content="Hugo 0.152.2"><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="megumi8821">
+<title>Pager 2 - zzw</title>
+
+<link rel='canonical' href='https://megumi8821.netlify.app/'>
+
+<link rel="stylesheet" href="/scss/style.min.3fd7aa17669a4c426ffe5607808019f5e67e0ec30176067cc74c265e419fdd7a.css"><meta property='og:title' content="zzw">
+<meta property='og:description' content="megumi8821">
+<meta property='og:url' content='https://megumi8821.netlify.app/'>
+<meta property='og:site_name' content='zzw'>
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2025-11-24T16:27:37&#43;08:00 '/>
+<meta name="twitter:title" content="zzw">
+<meta name="twitter:description" content="megumi8821"><link rel="alternate" type="application/rss&#43;xml" href="https://megumi8821.netlify.app/index.xml"><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaiscreen.css" />
+<link rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" />
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+        
+        <figure class="site-avatar">
+            <a href="/">
+                
+                
+
+                
+                
+                <img src="/img/avatar_hu_f0d44921c134bf3a.png" width="300"
+                    height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+                
+            </a>
+            
+        </figure>
+        
+        
+
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">zzw</a></h1>
+            <h2 class="site-description">megumi8821</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li  class='current' >
+            <a href='/' >
+                
+                
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友情链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+<aside class="sidebar right-sidebar sticky">
+        
+            
+                <form action="/search/" class="search-form widget" >
+        <p>
+            <label>搜索</label>
+            <input name="keyword" required placeholder="输入关键词..." />
+        
+            <button title="搜索">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+            </button>
+        </p>
+    </form>
+            
+        
+            
+                <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">归档</h2>
+
+        
+        
+        
+        
+        
+        <div class="widget-archive--list">
+            <div class="archives-year">
+                    <a href="/archives/#2025">
+                        
+                            <span class="year">2025</span>
+                            <span class="count">6</span>
+                        
+                    </a> 
+                </div>
+            
+        </div>
+    </section>
+            
+        
+            
+                <section class="widget tagCloud">
+    <div class="widget-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+    </div>
+    <h2 class="widget-title section-title">分类</h2>
+
+    <div class="tagCloud-tags">
+        
+            <a href="/categories/computernetworks/" class="font_size_2">
+                ComputerNetworks
+            </a>
+        
+            <a href="/categories/principleofcompile/" class="font_size_2">
+                PrincipleofCompile
+            </a>
+        
+            <a href="/categories/softwareengineering/" class="font_size_2">
+                SoftwareEngineering
+            </a>
+        
+    </div>
+</section>
+
+            
+        
+            
+                <section class="widget tagCloud">
+    <div class="widget-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tag" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11 3L20 12a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1 -2 0L3 11v-4a4 4 0 0 1 4 -4h4" />
+  <circle cx="9" cy="9" r="2" />
+</svg>
+
+
+
+    </div>
+    <h2 class="widget-title section-title">标签云</h2>
+
+    <div class="tagCloud-tags">
+        
+            <a href="/tags/http/">
+                HTTP
+            </a>
+        
+            <a href="/tags/tcp/">
+                TCP
+            </a>
+        
+            <a href="/tags/udp/">
+                UDP
+            </a>
+        
+            <a href="/tags/%E5%BA%94%E7%94%A8%E5%B1%82/">
+                应用层
+            </a>
+        
+            <a href="/tags/%E7%89%A9%E7%90%86%E5%B1%82/">
+                物理层
+            </a>
+        
+            <a href="/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+                生命周期
+            </a>
+        
+            <a href="/tags/%E7%9B%92%E5%9B%BE/">
+                盒图
+            </a>
+        
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B1%82/">
+                网络层
+            </a>
+        
+            <a href="/tags/%E8%BF%90%E8%BE%93%E5%B1%82/">
+                运输层
+            </a>
+        
+            <a href="/tags/%E9%93%BE%E8%B7%AF%E5%B1%82/">
+                链路层
+            </a>
+        
+    </div>
+</section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+
+
+
+
+
+<section class="welcome" aria-live="polite">
+    
+    <div class="welcome-inner">
+        <div class="poem-block">
+            <span class="welcome-line" id="welcome-poem-phrase">岁晚愁云合，登楼不见山</span>
+        </div>
+    </div>
+
+
+    <script>
+        (function () {
+            try {
+                var poems = ["成长更多地关乎勇气，而非知识","我们不是麦子，我们是荞麦","对春天而言，秋天是它的悲剧吗？","那些都是很好很好的，可是我偏不喜欢","岁晚愁云合，登楼不见山","一日长于百年，拥抱无始无终","火燃我爱爱不销，刀断我情情不已","自由是一种令人眩晕的失重状态"];
+        if (!Array.isArray(poems) || poems.length === 0) return;
+
+        var el = document.getElementById('welcome-poem-phrase');
+        if (!el) return;
+
+        var last = el.textContent || '';
+        function pickRandom(exclude) {
+            if (poems.length === 1) return poems[0];
+            var idx; var attempts = 0;
+            do { idx = Math.floor(Math.random() * poems.length); attempts++; }
+            while (poems[idx] === exclude && attempts < 6);
+            return poems[idx];
+        }
+
+        function showNext() {
+            var next = pickRandom(last);
+            
+            el.classList.remove('visible');
+            setTimeout(function () {
+                el.textContent = next;
+                last = next;
+                el.classList.add('visible');
+            }, 300);
+        }
+
+        
+        requestAnimationFrame(function () { el.classList.add('visible'); });
+
+        
+        var interval = 6000;
+        var timer = setInterval(showNext, interval);
+
+        
+        el.addEventListener('mouseenter', function () { clearInterval(timer); });
+        el.addEventListener('mouseleave', function () { timer = setInterval(showNext, interval); });
+                } catch (e) {
+            console && console.error && console.error('welcome poem error', e);
+        }
+            }) ();
+    </script>
+    
+</section>
+
+<section class="article-list">
+    
+    
+<article class="">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/computernetworks/" >
+                ComputerNetworks
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/http-%E4%B8%8E-tcpudp-%E7%9A%84%E5%B7%AE%E5%BC%82/">HTTP 与 TCP、UDP 的差异</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2025-11-24T09:05:14&#43;08:00'>2025-11-24</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+</article>
+    
+    
+<article class="">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/computernetworks/" >
+                ComputerNetworks
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/">五层模型</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2025-11-23T16:59:31&#43;08:00'>2025-11-23</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 5 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+</article>
+    
+</section>
+    <nav class='pagination'>
+        
+        
+
+        
+            
+                    <a class='page-link' href='/'>1</a>
+                
+            
+            
+                <span class='page-link current'>2</span>
+                
+            
+    </nav>
+
+<footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 megumi8821
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

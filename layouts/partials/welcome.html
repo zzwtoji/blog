@@ -1,0 +1,58 @@
+<section class="welcome" aria-live="polite">
+    {{ $poems := site.Data.poems }}
+    {{ if gt (len $poems) 0 }}
+    {{- $json := jsonify $poems -}}
+    <div class="welcome-inner">
+        <div class="poem-block">
+            <span class="welcome-line" id="welcome-poem-phrase">{{ index $poems (mod (now.Unix) (len $poems)) }}</span>
+        </div>
+    </div>
+
+
+    <script>
+        (function () {
+            try {
+                var poems = {{ $json | safeJS
+            }};
+        if (!Array.isArray(poems) || poems.length === 0) return;
+
+        var el = document.getElementById('welcome-poem-phrase');
+        if (!el) return;
+
+        var last = el.textContent || '';
+        function pickRandom(exclude) {
+            if (poems.length === 1) return poems[0];
+            var idx; var attempts = 0;
+            do { idx = Math.floor(Math.random() * poems.length); attempts++; }
+            while (poems[idx] === exclude && attempts < 6);
+            return poems[idx];
+        }
+
+        function showNext() {
+            var next = pickRandom(last);
+            // fade out, change, fade in
+            el.classList.remove('visible');
+            setTimeout(function () {
+                el.textContent = next;
+                last = next;
+                el.classList.add('visible');
+            }, 300);
+        }
+
+        // initial visible class
+        requestAnimationFrame(function () { el.classList.add('visible'); });
+
+        // rotate every 6 seconds
+        var interval = 6000;
+        var timer = setInterval(showNext, interval);
+
+        // pause on hover
+        el.addEventListener('mouseenter', function () { clearInterval(timer); });
+        el.addEventListener('mouseleave', function () { timer = setInterval(showNext, interval); });
+                } catch (e) {
+            console && console.error && console.error('welcome poem error', e);
+        }
+            }) ();
+    </script>
+    {{ end }}
+</section>

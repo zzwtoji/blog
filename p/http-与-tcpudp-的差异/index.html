@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="协议所属网络层 协议 网络层级 HTTP 应用层 TCP 运输层 UDP 运输层 连接特性 连接方式 HTTP：间接连接，HTTP 在请求/响应前需先通过 TCP 建立连接，再传输数据。 TCP：面向连接，传输前需通过三次握手建立连接，四次挥手断开连接。 UDP：无连接，直接发送数据，无需断开流程。 连接持续性 HTTP HTTP/1.0：短连接，每次请求后断开 TCP 连接。 HTTP/1.1：长连接，同一域名下多个请求复用一个 TCP 连接。 HTTP/2：多路复用，多个请求在一个 TCP 连接上并发传输。 TCP：建立连接后保持连接状态，可持续传输多批数据，直到双方发起断开请求。 UDP：每次发送数据都是独立的数据包，无连接保持逻辑。 可靠性 HTTP 依赖 TCP 实现可靠性。\nHTTP 本身不具备重传、校验机制，数据是否丢失、有序，完全由底层 TCP 负责。\nTCP 可靠传输。\n确认机制：接收方发 ACK 确认数据送达。 重传机制：超时未收到 ACK 则重传数据。 有序传输：通过序号标记数据顺序，接收方按序重组。 流量控制：防止发送方过快发送数据，避免接收方缓存溢出。 拥塞控制：根据网络状况调整发送速率，防止网络拥塞。 UDP 不可靠传输。\n无确认机制：发送数据后不等待接收方确认，无法确认数据是否送达。 无重传机制：数据丢失后不进行重传。 无序传输：数据包可能乱序到达，接收方需自行处理顺序问题。 无流量控制和拥塞控制：发送方按自身速率发送数据，可能导致接收方丢包。 数据完整性 HTTP 依赖 TCP 的校验。\nHTTP 数据完整性由 TCP 帧尾的 FCS 校验来保障，其自身仅通过部分头信息字段来辅助检测数据完整性。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="协议所属网络层 协议 网络层级 HTTP 应用层 TCP 运输层 UDP 运输层 连接特性 连接方式 HTTP：间接连接，HTTP 在请求/响应前需先通过 TCP 建立连接，再传输数据。 TCP：面向连接，传输前需通过三次握手建立连接，四次挥手断开连接。 UDP：无连接，直接发送数据，无需断开流程。 连接持续性 HTTP HTTP/1.0：短连接，每次请求后断开 TCP 连接。 HTTP/1.1：长连接，同一域名下多个请求复用一个 TCP 连接。 HTTP/2：多路复用，多个请求在一个 TCP 连接上并发传输。 TCP：建立连接后保持连接状态，可持续传输多批数据，直到双方发起断开请求。 UDP：每次发送数据都是独立的数据包，无连接保持逻辑。 可靠性 HTTP 依赖 TCP 实现可靠性。\n">
 <title>HTTP 与 TCP、UDP 的差异</title>
 
 <link rel='canonical' href='https://megumi8821.netlify.app/p/http-%E4%B8%8E-tcpudp-%E7%9A%84%E5%B7%AE%E5%BC%82/'>
 
-<link rel="stylesheet" href="/scss/style.min.c59e8b1a23ea91bdf7ddd5643e37450fb38223ce4ff7d7578155dcd45e903791.css"><meta property='og:title' content="HTTP 与 TCP、UDP 的差异">
-<meta property='og:description' content="协议所属网络层 协议 网络层级 HTTP 应用层 TCP 运输层 UDP 运输层 连接特性 连接方式 HTTP：间接连接，HTTP 在请求/响应前需先通过 TCP 建立连接，再传输数据。 TCP：面向连接，传输前需通过三次握手建立连接，四次挥手断开连接。 UDP：无连接，直接发送数据，无需断开流程。 连接持续性 HTTP HTTP/1.0：短连接，每次请求后断开 TCP 连接。 HTTP/1.1：长连接，同一域名下多个请求复用一个 TCP 连接。 HTTP/2：多路复用，多个请求在一个 TCP 连接上并发传输。 TCP：建立连接后保持连接状态，可持续传输多批数据，直到双方发起断开请求。 UDP：每次发送数据都是独立的数据包，无连接保持逻辑。 可靠性 HTTP 依赖 TCP 实现可靠性。\nHTTP 本身不具备重传、校验机制，数据是否丢失、有序，完全由底层 TCP 负责。\nTCP 可靠传输。\n确认机制：接收方发 ACK 确认数据送达。 重传机制：超时未收到 ACK 则重传数据。 有序传输：通过序号标记数据顺序，接收方按序重组。 流量控制：防止发送方过快发送数据，避免接收方缓存溢出。 拥塞控制：根据网络状况调整发送速率，防止网络拥塞。 UDP 不可靠传输。\n无确认机制：发送数据后不等待接收方确认，无法确认数据是否送达。 无重传机制：数据丢失后不进行重传。 无序传输：数据包可能乱序到达，接收方需自行处理顺序问题。 无流量控制和拥塞控制：发送方按自身速率发送数据，可能导致接收方丢包。 数据完整性 HTTP 依赖 TCP 的校验。\nHTTP 数据完整性由 TCP 帧尾的 FCS 校验来保障，其自身仅通过部分头信息字段来辅助检测数据完整性。\n">
+<link rel="stylesheet" href="/scss/style.min.3fd7aa17669a4c426ffe5607808019f5e67e0ec30176067cc74c265e419fdd7a.css"><meta property='og:title' content="HTTP 与 TCP、UDP 的差异">
+<meta property='og:description' content="协议所属网络层 协议 网络层级 HTTP 应用层 TCP 运输层 UDP 运输层 连接特性 连接方式 HTTP：间接连接，HTTP 在请求/响应前需先通过 TCP 建立连接，再传输数据。 TCP：面向连接，传输前需通过三次握手建立连接，四次挥手断开连接。 UDP：无连接，直接发送数据，无需断开流程。 连接持续性 HTTP HTTP/1.0：短连接，每次请求后断开 TCP 连接。 HTTP/1.1：长连接，同一域名下多个请求复用一个 TCP 连接。 HTTP/2：多路复用，多个请求在一个 TCP 连接上并发传输。 TCP：建立连接后保持连接状态，可持续传输多批数据，直到双方发起断开请求。 UDP：每次发送数据都是独立的数据包，无连接保持逻辑。 可靠性 HTTP 依赖 TCP 实现可靠性。\n">
 <meta property='og:url' content='https://megumi8821.netlify.app/p/http-%E4%B8%8E-tcpudp-%E7%9A%84%E5%B7%AE%E5%BC%82/'>
 <meta property='og:site_name' content='zzw'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HTTP' /><meta property='article:tag' content='TCP' /><meta property='article:tag' content='UDP' /><meta property='article:published_time' content='2025-11-24T09:05:14&#43;08:00'/><meta property='article:modified_time' content='2025-11-24T09:05:14&#43;08:00'/>
 <meta name="twitter:title" content="HTTP 与 TCP、UDP 的差异">
-<meta name="twitter:description" content="协议所属网络层 协议 网络层级 HTTP 应用层 TCP 运输层 UDP 运输层 连接特性 连接方式 HTTP：间接连接，HTTP 在请求/响应前需先通过 TCP 建立连接，再传输数据。 TCP：面向连接，传输前需通过三次握手建立连接，四次挥手断开连接。 UDP：无连接，直接发送数据，无需断开流程。 连接持续性 HTTP HTTP/1.0：短连接，每次请求后断开 TCP 连接。 HTTP/1.1：长连接，同一域名下多个请求复用一个 TCP 连接。 HTTP/2：多路复用，多个请求在一个 TCP 连接上并发传输。 TCP：建立连接后保持连接状态，可持续传输多批数据，直到双方发起断开请求。 UDP：每次发送数据都是独立的数据包，无连接保持逻辑。 可靠性 HTTP 依赖 TCP 实现可靠性。\nHTTP 本身不具备重传、校验机制，数据是否丢失、有序，完全由底层 TCP 负责。\nTCP 可靠传输。\n确认机制：接收方发 ACK 确认数据送达。 重传机制：超时未收到 ACK 则重传数据。 有序传输：通过序号标记数据顺序，接收方按序重组。 流量控制：防止发送方过快发送数据，避免接收方缓存溢出。 拥塞控制：根据网络状况调整发送速率，防止网络拥塞。 UDP 不可靠传输。\n无确认机制：发送数据后不等待接收方确认，无法确认数据是否送达。 无重传机制：数据丢失后不进行重传。 无序传输：数据包可能乱序到达，接收方需自行处理顺序问题。 无流量控制和拥塞控制：发送方按自身速率发送数据，可能导致接收方丢包。 数据完整性 HTTP 依赖 TCP 的校验。\nHTTP 数据完整性由 TCP 帧尾的 FCS 校验来保障，其自身仅通过部分头信息字段来辅助检测数据完整性。\n">
+<meta name="twitter:description" content="协议所属网络层 协议 网络层级 HTTP 应用层 TCP 运输层 UDP 运输层 连接特性 连接方式 HTTP：间接连接，HTTP 在请求/响应前需先通过 TCP 建立连接，再传输数据。 TCP：面向连接，传输前需通过三次握手建立连接，四次挥手断开连接。 UDP：无连接，直接发送数据，无需断开流程。 连接持续性 HTTP HTTP/1.0：短连接，每次请求后断开 TCP 连接。 HTTP/1.1：长连接，同一域名下多个请求复用一个 TCP 连接。 HTTP/2：多路复用，多个请求在一个 TCP 连接上并发传输。 TCP：建立连接后保持连接状态，可持续传输多批数据，直到双方发起断开请求。 UDP：每次发送数据都是独立的数据包，无连接保持逻辑。 可靠性 HTTP 依赖 TCP 实现可靠性。\n"><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaiscreen.css" />
+<link rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" />
     </head>
     <body class="
 article-page
@@ -48,24 +49,24 @@ article-page
 
     <header>
         
+        
+        <figure class="site-avatar">
+            <a href="/">
+                
+                
+
+                
+                
+                <img src="/img/avatar_hu_f0d44921c134bf3a.png" width="300"
+                    height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+                
+            </a>
             
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hu_f0d44921c134bf3a.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-            </figure>
-            
+        </figure>
         
         
+
         <div class="site-meta">
             <h1 class="site-name"><a href="/">zzw</a></h1>
             <h2 class="site-description">megumi8821</h2>
@@ -79,7 +80,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <polyline points="5 12 3 12 12 3 21 12 19 12" />
   <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
@@ -99,7 +100,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="12" cy="7" r="4" />
   <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
@@ -118,7 +119,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <rect x="3" y="4" width="18" height="4" rx="2" />
   <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
@@ -138,7 +139,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="10" cy="10" r="7" />
   <line x1="21" y1="21" x2="15" y2="15" />
@@ -157,7 +158,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
   <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
@@ -174,8 +175,8 @@ article-page
             <ol class="menu">
 
                 
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -183,7 +184,7 @@ article-page
 
 
 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -191,14 +192,13 @@ article-page
 
 
 
-                        <span>暗色模式</span>
-                    </li>
+                    <span>暗色模式</span>
+                </li>
                 
             </ol>
         </li>
     </ol>
 </aside>
-
 <aside class="sidebar right-sidebar sticky">
         
             
@@ -252,7 +252,31 @@ article-page
       </ol>
     </li>
     <li><a href="#适用场景">适用场景</a></li>
-    <li><a href="#数据格式与传输单元">数据格式与传输单元</a></li>
+    <li><a href="#数据格式与传输单元">数据格式与传输单元</a>
+      <ol>
+        <li><a href="#http-3">HTTP</a>
+          <ol>
+            <li><a href="#数据格式">数据格式</a></li>
+            <li><a href="#传输单元">传输单元</a></li>
+          </ol>
+        </li>
+        <li><a href="#tcp-3">TCP</a>
+          <ol>
+            <li><a href="#数据格式-1">数据格式</a></li>
+            <li><a href="#传输单元-1">传输单元</a></li>
+          </ol>
+        </li>
+        <li><a href="#udp-3">UDP</a>
+          <ol>
+            <li><a href="#数据格式-2">数据格式</a></li>
+            <li><a href="#传输单元-2">传输单元</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#端口号与通信对象">端口号与通信对象</a></li>
+    <li><a href="#应用场景">应用场景</a></li>
+    <li><a href="#协议间的依赖关系">协议间的依赖关系</a></li>
   </ol>
 </nav>
     </div>
@@ -470,7 +494,7 @@ article-page
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -597,32 +621,97 @@ article-page
 </li>
 </ul>
 <h2 id="数据格式与传输单元">数据格式与传输单元
+</h2><h3 id="http-3">HTTP
+</h3><h4 id="数据格式">数据格式
+</h4><ul>
+<li>请求报文
+<ul>
+<li>请求行：请求方法+请求路径+协议版本</li>
+<li>请求头：键值对形式的元数据，用于告知服务器请求的附加信息。</li>
+<li>请求体：可选部分，常用于 POST 请求，用来传递表单数据、JSON 等内容。</li>
+</ul>
+</li>
+<li>响应报文
+<ul>
+<li>状态行：协议版本+状态码+状态描述</li>
+<li>响应头：键值对形式的元数据，用于告知客户端响应的附加信息。</li>
+<li>响应体：服务器返回的实际数据内容，如 HTML 页面、JSON 数据等。</li>
+</ul>
+</li>
+</ul>
+<h4 id="传输单元">传输单元
+</h4><p>HTTP 本身没有专属传输单元。发送方将 HTTP 的整份报文拆成若干部分，融进 TCP 的字节流。接收方再通过 TCP 重组字节流，还原成完整的 HTTP 报文。</p>
+<h3 id="tcp-3">TCP
+</h3><h4 id="数据格式-1">数据格式
+</h4><p>TCP 不关心应用层数据的具体格式，不论是 HTTP 报文还是文件数据，都会统一封装成 TCP 段。</p>
+<p>每个 TCP 段的头部至少 20 字节，包含源端口、目标端口、序列号和确认号等关键信息。</p>
+<h4 id="传输单元-1">传输单元
+</h4><p>TCP 的传输单元是 TCP 段。段的大小受 MTU 限制。TCP 总长度超出 MTU 后就会被拆分成多个段传输。</p>
+<h3 id="udp-3">UDP
+</h3><h4 id="数据格式-2">数据格式
+</h4><p>UDP 不关心应用层数据的具体格式，任何数据都可以封装成 UDP 数据报。</p>
+<p>每个 UDP 数据报的头部固定 8 字节，只包含源端口、目标端口、数据包长度、校验和 4 个字段。</p>
+<h4 id="传输单元-2">传输单元
+</h4><p>UDP 的传输单元是 UDP 数据报。每个数据报独立传输，大小受 MTU 限制，超出部分会被丢弃。</p>
+<h2 id="端口号与通信对象">端口号与通信对象
 </h2><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th>协议</th>
-          <th>数据格式</th>
-          <th>传输单元</th>
+          <th style="text-align: center">协议</th>
+          <th>端口号范围</th>
+          <th>通信对象</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td>HTTP</td>
-          <td>请求报文：请求行+请求头+请求体<br>响应报文：状态行+响应头+响应体</td>
-          <td>基于 TCP 的字节流</td>
+          <td style="text-align: center">HTTP</td>
+          <td>80（未加密）<br>443（加密）</td>
+          <td>应用层的客户端和服务器，通过域名+端口定位服务器应用</td>
       </tr>
       <tr>
-          <td>TCP</td>
-          <td>封装应用层数据为 TCP 段</td>
-          <td>TCP 段：包含 TCP 头部和数据</td>
+          <td style="text-align: center">TCP</td>
+          <td>无默认端口，由应用层协议指定<br>SSH：22</td>
+          <td>基于“源 IP+源端口+目标 IP+目标端口”定位端到端连接，实现两台设备间的双向通信</td>
       </tr>
       <tr>
-          <td>UDP</td>
-          <td>UDP 数据报（Datagram）</td>
-          <td>数据报（Datagram）</td>
+          <td style="text-align: center">UDP</td>
+          <td>无默认端口，由应用层协议指定<br>DNS：53<br>DHCP：67/68</td>
+          <td>基于“源 IP+源端口+目标 IP+目标端口”定位通信对象，仅单向发送数据报</td>
       </tr>
   </tbody>
 </table></div>
+<h2 id="应用场景">应用场景
+</h2><ul>
+<li>HTTP
+<ul>
+<li>网页浏览</li>
+<li>接口调用</li>
+<li>文件下载</li>
+</ul>
+</li>
+<li>TCP
+<ul>
+<li>文件传输</li>
+<li>邮件收发</li>
+<li>远程登录</li>
+<li>HTTP/1.0/1.1/2 的传输载体</li>
+</ul>
+</li>
+<li>UDP
+<ul>
+<li>实时通信</li>
+<li>视频直播</li>
+<li>在线游戏</li>
+<li>DNS 查询</li>
+<li>HTTP/3 的传输载体</li>
+</ul>
+</li>
+</ul>
+<h2 id="协议间的依赖关系">协议间的依赖关系
+</h2><ol>
+<li>HTTP 与 TCP 的依赖：HTTP 所有数据必须通过 TCP 连接传输，TCP 为 HTTP 提供可靠的数据通道。</li>
+<li>HTTP 与 UDP 的关系：HTTP 本身不使用 UDP 进行传输，但 HTTP/3 采用 QUIC 协议，QUIC 基于 UDP 实现，提供类似 TCP 的可靠传输功能。</li>
+</ol>
 
 </section>
 
@@ -655,18 +744,13 @@ article-page
     <div class="related-content">
         <div class="flex article-list--tile">
             
-                
-<article class="">
+                <article>
     <a href="/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/">
-        
-        
-
         <div class="article-details">
             <h2 class="article-title">五层模型</h2>
         </div>
     </a>
 </article>
-
             
         </div>
     </div>

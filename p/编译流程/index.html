@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="nihao\n">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="词法分析 读取源程序字符流，按语言规则拆分为语法单元（Token）。\nToken 标识符（变量名、函数名） 关键字（if、for） 常量（数字、字符串） 运算符（+、-、*、/） 分隔符（,、;） 输出：Token 序列\n">
 <title>编译流程</title>
 
-<link rel='canonical' href='http://localhost:1313/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/'>
+<link rel='canonical' href='https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/'>
 
-<link rel="stylesheet" href="/scss/style.min.c59e8b1a23ea91bdf7ddd5643e37450fb38223ce4ff7d7578155dcd45e903791.css"><meta property='og:title' content="编译流程">
-<meta property='og:description' content="nihao\n">
-<meta property='og:url' content='http://localhost:1313/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/'>
+<link rel="stylesheet" href="/scss/style.min.3fd7aa17669a4c426ffe5607808019f5e67e0ec30176067cc74c265e419fdd7a.css"><meta property='og:title' content="编译流程">
+<meta property='og:description' content="词法分析 读取源程序字符流，按语言规则拆分为语法单元（Token）。\nToken 标识符（变量名、函数名） 关键字（if、for） 常量（数字、字符串） 运算符（+、-、*、/） 分隔符（,、;） 输出：Token 序列\n">
+<meta property='og:url' content='https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/'>
 <meta property='og:site_name' content='zzw'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-11-23T16:59:31&#43;08:00'/><meta property='article:modified_time' content='2025-11-23T16:59:31&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-11-24T16:13:53&#43;08:00'/><meta property='article:modified_time' content='2025-11-24T16:13:53&#43;08:00'/>
 <meta name="twitter:title" content="编译流程">
-<meta name="twitter:description" content="nihao\n">
+<meta name="twitter:description" content="词法分析 读取源程序字符流，按语言规则拆分为语法单元（Token）。\nToken 标识符（变量名、函数名） 关键字（if、for） 常量（数字、字符串） 运算符（+、-、*、/） 分隔符（,、;） 输出：Token 序列\n"><link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaiscreen.css" />
+<link rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" />
     </head>
     <body class="
 article-page
@@ -48,24 +49,24 @@ article-page
 
     <header>
         
+        
+        <figure class="site-avatar">
+            <a href="/">
+                
+                
+
+                
+                
+                <img src="/img/avatar_hu_f0d44921c134bf3a.png" width="300"
+                    height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+                
+            </a>
             
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hu_f0d44921c134bf3a.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-            </figure>
-            
+        </figure>
         
         
+
         <div class="site-meta">
             <h1 class="site-name"><a href="/">zzw</a></h1>
             <h2 class="site-description">megumi8821</h2>
@@ -79,7 +80,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <polyline points="5 12 3 12 12 3 21 12 19 12" />
   <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
@@ -99,7 +100,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="12" cy="7" r="4" />
   <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
@@ -118,7 +119,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <rect x="3" y="4" width="18" height="4" rx="2" />
   <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
@@ -138,7 +139,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="10" cy="10" r="7" />
   <line x1="21" y1="21" x2="15" y2="15" />
@@ -157,7 +158,7 @@ article-page
                 
                 
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
   <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
@@ -174,8 +175,8 @@ article-page
             <ol class="menu">
 
                 
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -183,7 +184,7 @@ article-page
 
 
 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -191,14 +192,205 @@ article-page
 
 
 
-                        <span>暗色模式</span>
-                    </li>
+                    <span>暗色模式</span>
+                </li>
                 
             </ol>
         </li>
     </ol>
 </aside>
+<aside class="sidebar right-sidebar sticky">
+        
+            
+                
 
+<button id="toggle-toc" class="mobile-only">Toc</button>
+<section class="widget archives" id="toc-container">
+    <div class="widget-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+    </div>
+    <h2 class="widget-title section-title">目录</h2>
+
+    <div class="widget--toc">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#词法分析">词法分析</a></li>
+    <li><a href="#语法分析">语法分析</a></li>
+    <li><a href="#语义分析">语义分析</a></li>
+    <li><a href="#中间代码生成">中间代码生成</a></li>
+    <li><a href="#中间代码优化">中间代码优化</a></li>
+    <li><a href="#目标代码生成">目标代码生成</a></li>
+    <li><a href="#目标代码优化">目标代码优化</a></li>
+  </ol>
+</nav>
+    </div>
+</section>
+
+
+<style>
+    .container {
+        .right-sidebar {
+             
+            display: flex;
+        }
+    }
+
+     
+    .mobile-only {
+        display: none !important;
+    }
+
+    #toc-container {
+         
+         
+        position: fixed;
+         
+        bottom: 21%;
+         
+        right: 60px;
+         
+        background-color: var(--card-background);
+         
+        padding: 10px;
+         
+        border: 1px solid #96979a50;
+        border-radius: var(--card-border-radius);
+         
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+         
+        z-index: 9998 !important;
+         
+        max-height: 75vh;
+        overflow-y: auto;
+         
+        width: auto;
+        max-width: 290px;
+    }
+
+    #toggle-toc {
+        position: fixed;
+        bottom: 22%;
+        right: 20px;
+        padding: 10px 10px;
+        z-index: 9998 !important;
+        border: 0px solid #96979a50;
+        border-radius: 7px;
+        box-shadow: var(--shadow-l1);
+        background-color: #00640010;
+        color: #34495e;
+         
+        display: none;
+         
+        margin-bottom: -20px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .widget--toc #TableOfContents {
+        overflow-x: auto;
+        max-height: 66vh;
+        width: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+        .mobile-only {
+            display: block !important;
+             
+        }
+
+        #toc-container {
+            display: none;
+             
+        }
+
+        #toggle-toc {
+            display: block;
+             
+            bottom: 100px;
+             
+        }
+    }
+
+     
+    @media screen and (min-width: 769px) {
+        #toc-container {
+            display: block !important;
+             
+            position: static;
+             
+            border: none;
+             
+            box-shadow: none;
+             
+            max-height: none;
+             
+            overflow-y: visible;
+             
+            margin-top: 20px;
+             
+            right: auto;
+             
+            bottom: auto;
+             
+            width: auto;
+             
+            max-width: 100%;
+             
+            background-color: transparent;
+             
+            padding: 0;
+             
+        }
+
+        #toggle-toc {
+            display: none !important;
+             
+        }
+    }
+</style>
+<script>
+    var toggleButton = document.getElementById('toggle-toc');
+    var tocContainer = document.getElementById('toc-container');
+
+    
+    toggleButton.addEventListener('click', function () {
+        if (tocContainer.style.display === 'none' || tocContainer.style.display === '') {
+            tocContainer.style.display = 'block';
+        } else {
+            tocContainer.style.display = 'none';
+        }
+    });
+
+    
+    toggleButton.addEventListener('mouseover', function () {
+        
+        tocContainer.style.display = 'block';
+        
+    });
+
+    
+    document.addEventListener('click', function (event) {
+        
+        
+        if (!tocContainer.contains(event.target) && event.target !== toggleButton) {
+            
+            tocContainer.style.display = 'none';
+        }
+        
+    });
+</script>
+            
+        
+    </aside>
 
 
             <main class="main full-width">
@@ -209,8 +401,8 @@ article-page
     
     <header class="article-category">
         
-            <a href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" >
-                编译原理
+            <a href="/categories/principleofcompile/" >
+                PrincipleofCompile
             </a>
         
     </header>
@@ -240,7 +432,7 @@ article-page
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published" datetime='2025-11-23T16:59:31&#43;08:00'>2025-11-23</time>
+                <time class="article-time--published" datetime='2025-11-24T16:13:53&#43;08:00'>2025-11-24</time>
             </div>
         
 
@@ -255,7 +447,7 @@ article-page
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -270,7 +462,82 @@ article-page
     <section class="article-content">
     
     
-    <p>nihao</p>
+    <h2 id="词法分析">词法分析
+</h2><p>读取源程序字符流，按语言规则拆分为语法单元（Token）。</p>
+<ul>
+<li>Token
+<ul>
+<li>标识符（变量名、函数名）</li>
+<li>关键字（if、for）</li>
+<li>常量（数字、字符串）</li>
+<li>运算符（+、-、*、/）</li>
+<li>分隔符（,、;）</li>
+</ul>
+</li>
+</ul>
+<p>输出：Token 序列</p>
+<h2 id="语法分析">语法分析
+</h2><p>根据语言的语法规则，将 Token 序列组织成抽象语法树（AST，Abstract Syntax Tree）。</p>
+<p>输出：抽象语法树（AST）或语法树</p>
+<h2 id="语义分析">语义分析
+</h2><p>检查 AST 是否符合语言的语义规则，确保代码逻辑合法。</p>
+<ul>
+<li>检查内容
+<ul>
+<li>类型匹配（整数和字符串不能直接相加、函数参数类型不匹配）</li>
+<li>作用域检查（局部变量跨作用域访问）</li>
+<li>标识符定义（使用未声明的变量、重复定义）</li>
+</ul>
+</li>
+</ul>
+<p>输出：标注语义信息的 AST</p>
+<h2 id="中间代码生成">中间代码生成
+</h2><p>将语义正确的 AST 转换为中间代码（Intermediate Representation，IR），降低目标代码生成的复杂度。</p>
+<ul>
+<li>常见中间代码形式
+<ul>
+<li>三地址码（Three-Address Code）</li>
+<li>四元式</li>
+<li>逆波兰式</li>
+</ul>
+</li>
+</ul>
+<p>输出：中间代码序列</p>
+<h2 id="中间代码优化">中间代码优化
+</h2><p>对中间代码进行优化，提高代码执行效率，减少资源消耗。</p>
+<ul>
+<li>优化技术
+<ul>
+<li>常量折叠（Constant Folding）</li>
+<li>死代码消除（Dead Code Elimination）</li>
+<li>循环优化（Loop Optimization）</li>
+</ul>
+</li>
+</ul>
+<p>输出：优化后的中间代码</p>
+<h2 id="目标代码生成">目标代码生成
+</h2><p>将中间代码转换为目标机器代码（Machine Code）或汇编代码，再通过汇编器转化为机器指令。</p>
+<ul>
+<li>操作
+<ul>
+<li>指令选择</li>
+<li>寄存器分配</li>
+<li>指令调度</li>
+</ul>
+</li>
+</ul>
+<p>输出：目标机器的汇编代码或二进制目标文件</p>
+<h2 id="目标代码优化">目标代码优化
+</h2><p>对生成的目标代码进行进一步优化，提高执行效率和减少内存占用。</p>
+<ul>
+<li>优化技术
+<ul>
+<li>指令重排</li>
+<li>寄存器复用</li>
+</ul>
+</li>
+</ul>
+<p>输出：优化后的目标代码</p>
 
 </section>
 
@@ -288,9 +555,31 @@ article-page
 
 
 
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                <article>
+    <a href="/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/">
+        <div class="article-details">
+            <h2 class="article-title">正则表达式与词法分析</h2>
+        </div>
+    </a>
+</article>
+            
+        </div>
+    </div>
+</aside>
+
 
 <div class="pre-next">
     
+    <a class="pre-next-btn bg" href="https://megumi8821.netlify.app/p/%E7%9B%92%E5%9B%BE/">
+        &lt;&lt; 盒图</a>
+            
+            
+            <a class="pre-next-btn bg" href="https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/">正则表达式与词法分析 >></a>
             
 </div>
 
@@ -396,7 +685,7 @@ article-page
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.d6a0599fc671bfdcc3e0e42720f0b982d879d1ee721dc915317ac9a1fbd518e6.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

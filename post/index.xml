@@ -7,7 +7,186 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>megumi8821</copyright>
-        <lastBuildDate>Mon, 24 Nov 2025 13:29:41 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 24 Nov 2025 16:27:37 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>正则表达式与词法分析</title>
+        <link>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</link>
+        <pubDate>Mon, 24 Nov 2025 16:27:37 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;nihao&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;hello_world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我是&lt;code&gt;var&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;niaao&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;nihao&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;词法分析：识别词法单元 Token。&lt;/p&gt;
+&lt;p&gt;正则表达式：正则文法的字符串表示形式。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;正则文法（3 型文法）
+&lt;ul&gt;
+&lt;li&gt;右线性文法：非终结符 → 终结符+非终结符或非终结符 → 终结符&lt;/li&gt;
+&lt;li&gt;左线性文法：非终结符 → 非终结符+终结符或非终结符 → 终结符&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;正则表达式运算&#34;&gt;正则表达式运算
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;连接运算（$AB$）：顺序强制，元素都要出现。&lt;/li&gt;
+&lt;li&gt;交替运算（$A|B$）：互斥选择，必须选一个。&lt;/li&gt;
+&lt;li&gt;闭包运算（$A^*$）：重复 0 次或多次。&lt;/li&gt;
+&lt;li&gt;可选运算（$A^?$）：最多出现一次，也可以不出现。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;有限自动机fa&#34;&gt;有限自动机（FA）
+&lt;/h2&gt;&lt;h3 id=&#34;nfanondeterministic-finite-automaton非确定性有限自动机&#34;&gt;NFA（Nondeterministic Finite Automaton，非确定性有限自动机）
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;NFA
+&lt;ul&gt;
+&lt;li&gt;状态集合（$S$）&lt;/li&gt;
+&lt;li&gt;输入符号集合（$\Sigma$）&lt;/li&gt;
+&lt;li&gt;状态转换函数（$\delta: S \times (\Sigma \cup \{\epsilon\}) \to 2^S$）&lt;/li&gt;
+&lt;li&gt;初始状态（$s_0$）&lt;/li&gt;
+&lt;li&gt;接受状态集合（$F$）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;thompsons-construction&#34;&gt;Thompson&amp;rsquo;s Construction
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;只处理 3 种核心运算和两种原子单元，覆盖所有正则表达式。&lt;/li&gt;
+&lt;li&gt;每一步组合都严格遵循固定规则，确保最终的 NFA 正确匹配正则表达式。&lt;/li&gt;
+&lt;li&gt;生成的 NFA 可能包含$\epsilon$转换。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;dfadeterministic-finite-automaton确定性有限自动机&#34;&gt;DFA（Deterministic Finite Automaton，确定性有限自动机）
+&lt;/h3&gt;&lt;h3 id=&#34;dfa-最小化&#34;&gt;DFA 最小化
+&lt;/h3&gt;</description>
+        </item>
+        <item>
+        <title>编译流程</title>
+        <link>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</link>
+        <pubDate>Mon, 24 Nov 2025 16:13:53 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</guid>
+        <description>&lt;h2 id=&#34;词法分析&#34;&gt;词法分析
+&lt;/h2&gt;&lt;p&gt;读取源程序字符流，按语言规则拆分为语法单元（Token）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Token
+&lt;ul&gt;
+&lt;li&gt;标识符（变量名、函数名）&lt;/li&gt;
+&lt;li&gt;关键字（if、for）&lt;/li&gt;
+&lt;li&gt;常量（数字、字符串）&lt;/li&gt;
+&lt;li&gt;运算符（+、-、*、/）&lt;/li&gt;
+&lt;li&gt;分隔符（,、;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：Token 序列&lt;/p&gt;
+&lt;h2 id=&#34;语法分析&#34;&gt;语法分析
+&lt;/h2&gt;&lt;p&gt;根据语言的语法规则，将 Token 序列组织成抽象语法树（AST，Abstract Syntax Tree）。&lt;/p&gt;
+&lt;p&gt;输出：抽象语法树（AST）或语法树&lt;/p&gt;
+&lt;h2 id=&#34;语义分析&#34;&gt;语义分析
+&lt;/h2&gt;&lt;p&gt;检查 AST 是否符合语言的语义规则，确保代码逻辑合法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;检查内容
+&lt;ul&gt;
+&lt;li&gt;类型匹配（整数和字符串不能直接相加、函数参数类型不匹配）&lt;/li&gt;
+&lt;li&gt;作用域检查（局部变量跨作用域访问）&lt;/li&gt;
+&lt;li&gt;标识符定义（使用未声明的变量、重复定义）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：标注语义信息的 AST&lt;/p&gt;
+&lt;h2 id=&#34;中间代码生成&#34;&gt;中间代码生成
+&lt;/h2&gt;&lt;p&gt;将语义正确的 AST 转换为中间代码（Intermediate Representation，IR），降低目标代码生成的复杂度。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常见中间代码形式
+&lt;ul&gt;
+&lt;li&gt;三地址码（Three-Address Code）&lt;/li&gt;
+&lt;li&gt;四元式&lt;/li&gt;
+&lt;li&gt;逆波兰式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：中间代码序列&lt;/p&gt;
+&lt;h2 id=&#34;中间代码优化&#34;&gt;中间代码优化
+&lt;/h2&gt;&lt;p&gt;对中间代码进行优化，提高代码执行效率，减少资源消耗。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化技术
+&lt;ul&gt;
+&lt;li&gt;常量折叠（Constant Folding）&lt;/li&gt;
+&lt;li&gt;死代码消除（Dead Code Elimination）&lt;/li&gt;
+&lt;li&gt;循环优化（Loop Optimization）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：优化后的中间代码&lt;/p&gt;
+&lt;h2 id=&#34;目标代码生成&#34;&gt;目标代码生成
+&lt;/h2&gt;&lt;p&gt;将中间代码转换为目标机器代码（Machine Code）或汇编代码，再通过汇编器转化为机器指令。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;操作
+&lt;ul&gt;
+&lt;li&gt;指令选择&lt;/li&gt;
+&lt;li&gt;寄存器分配&lt;/li&gt;
+&lt;li&gt;指令调度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：目标机器的汇编代码或二进制目标文件&lt;/p&gt;
+&lt;h2 id=&#34;目标代码优化&#34;&gt;目标代码优化
+&lt;/h2&gt;&lt;p&gt;对生成的目标代码进行进一步优化，提高执行效率和减少内存占用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化技术
+&lt;ul&gt;
+&lt;li&gt;指令重排&lt;/li&gt;
+&lt;li&gt;寄存器复用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：优化后的目标代码&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>盒图</title>
+        <link>https://megumi8821.netlify.app/p/%E7%9B%92%E5%9B%BE/</link>
+        <pubDate>Mon, 24 Nov 2025 14:40:18 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E7%9B%92%E5%9B%BE/</guid>
+        <description>&lt;h2 id=&#34;定义&#34;&gt;定义
+&lt;/h2&gt;&lt;p&gt;盒图又称 N-S 图，是一种无箭头的流程图。它用矩形框表示程序的各种逻辑结构），所有流程控制都通过盒子的嵌套或并列实现&lt;/p&gt;
+&lt;h2 id=&#34;核心结构&#34;&gt;核心结构
+&lt;/h2&gt;&lt;h3 id=&#34;顺序结构&#34;&gt;顺序结构
+&lt;/h3&gt;&lt;p&gt;按从上到小的顺序依次执行多个操作。
+&lt;img src=&#34;https://cdn.jsdelivr.net/gh/zzwtoji/blog_picture/20251124144940.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;20251124144940&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;选择结构分支结构&#34;&gt;选择结构（分支结构）
+&lt;/h3&gt;&lt;h3 id=&#34;循环结构&#34;&gt;循环结构
+&lt;/h3&gt;&lt;h3 id=&#34;多情况选择结构for-循环专用&#34;&gt;多情况选择结构（for 循环专用）
+&lt;/h3&gt;&lt;h3 id=&#34;子程序调用结构&#34;&gt;子程序调用结构
+&lt;/h3&gt;&lt;h2 id=&#34;优势&#34;&gt;优势
+&lt;/h2&gt;&lt;h2 id=&#34;应用场景&#34;&gt;应用场景
+&lt;/h2&gt;</description>
+        </item>
+        <item>
         <title>软件工程生命周期</title>
         <link>https://megumi8821.netlify.app/p/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</link>
         <pubDate>Mon, 24 Nov 2025 13:29:41 +0800</pubDate>
@@ -243,32 +422,97 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;数据格式与传输单元&#34;&gt;数据格式与传输单元
+&lt;/h2&gt;&lt;h3 id=&#34;http-3&#34;&gt;HTTP
+&lt;/h3&gt;&lt;h4 id=&#34;数据格式&#34;&gt;数据格式
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;请求报文
+&lt;ul&gt;
+&lt;li&gt;请求行：请求方法+请求路径+协议版本&lt;/li&gt;
+&lt;li&gt;请求头：键值对形式的元数据，用于告知服务器请求的附加信息。&lt;/li&gt;
+&lt;li&gt;请求体：可选部分，常用于 POST 请求，用来传递表单数据、JSON 等内容。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;响应报文
+&lt;ul&gt;
+&lt;li&gt;状态行：协议版本+状态码+状态描述&lt;/li&gt;
+&lt;li&gt;响应头：键值对形式的元数据，用于告知客户端响应的附加信息。&lt;/li&gt;
+&lt;li&gt;响应体：服务器返回的实际数据内容，如 HTML 页面、JSON 数据等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;传输单元&#34;&gt;传输单元
+&lt;/h4&gt;&lt;p&gt;HTTP 本身没有专属传输单元。发送方将 HTTP 的整份报文拆成若干部分，融进 TCP 的字节流。接收方再通过 TCP 重组字节流，还原成完整的 HTTP 报文。&lt;/p&gt;
+&lt;h3 id=&#34;tcp-3&#34;&gt;TCP
+&lt;/h3&gt;&lt;h4 id=&#34;数据格式-1&#34;&gt;数据格式
+&lt;/h4&gt;&lt;p&gt;TCP 不关心应用层数据的具体格式，不论是 HTTP 报文还是文件数据，都会统一封装成 TCP 段。&lt;/p&gt;
+&lt;p&gt;每个 TCP 段的头部至少 20 字节，包含源端口、目标端口、序列号和确认号等关键信息。&lt;/p&gt;
+&lt;h4 id=&#34;传输单元-1&#34;&gt;传输单元
+&lt;/h4&gt;&lt;p&gt;TCP 的传输单元是 TCP 段。段的大小受 MTU 限制。TCP 总长度超出 MTU 后就会被拆分成多个段传输。&lt;/p&gt;
+&lt;h3 id=&#34;udp-3&#34;&gt;UDP
+&lt;/h3&gt;&lt;h4 id=&#34;数据格式-2&#34;&gt;数据格式
+&lt;/h4&gt;&lt;p&gt;UDP 不关心应用层数据的具体格式，任何数据都可以封装成 UDP 数据报。&lt;/p&gt;
+&lt;p&gt;每个 UDP 数据报的头部固定 8 字节，只包含源端口、目标端口、数据包长度、校验和 4 个字段。&lt;/p&gt;
+&lt;h4 id=&#34;传输单元-2&#34;&gt;传输单元
+&lt;/h4&gt;&lt;p&gt;UDP 的传输单元是 UDP 数据报。每个数据报独立传输，大小受 MTU 限制，超出部分会被丢弃。&lt;/p&gt;
+&lt;h2 id=&#34;端口号与通信对象&#34;&gt;端口号与通信对象
 &lt;/h2&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
-          &lt;th&gt;协议&lt;/th&gt;
-          &lt;th&gt;数据格式&lt;/th&gt;
-          &lt;th&gt;传输单元&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;协议&lt;/th&gt;
+          &lt;th&gt;端口号范围&lt;/th&gt;
+          &lt;th&gt;通信对象&lt;/th&gt;
       &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
       &lt;tr&gt;
-          &lt;td&gt;HTTP&lt;/td&gt;
-          &lt;td&gt;请求报文：请求行+请求头+请求体&lt;br&gt;响应报文：状态行+响应头+响应体&lt;/td&gt;
-          &lt;td&gt;基于 TCP 的字节流&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;HTTP&lt;/td&gt;
+          &lt;td&gt;80（未加密）&lt;br&gt;443（加密）&lt;/td&gt;
+          &lt;td&gt;应用层的客户端和服务器，通过域名+端口定位服务器应用&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td&gt;TCP&lt;/td&gt;
-          &lt;td&gt;封装应用层数据为 TCP 段&lt;/td&gt;
-          &lt;td&gt;TCP 段：包含 TCP 头部和数据&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;TCP&lt;/td&gt;
+          &lt;td&gt;无默认端口，由应用层协议指定&lt;br&gt;SSH：22&lt;/td&gt;
+          &lt;td&gt;基于“源 IP+源端口+目标 IP+目标端口”定位端到端连接，实现两台设备间的双向通信&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td&gt;UDP&lt;/td&gt;
-          &lt;td&gt;UDP 数据报（Datagram）&lt;/td&gt;
-          &lt;td&gt;数据报（Datagram）&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;UDP&lt;/td&gt;
+          &lt;td&gt;无默认端口，由应用层协议指定&lt;br&gt;DNS：53&lt;br&gt;DHCP：67/68&lt;/td&gt;
+          &lt;td&gt;基于“源 IP+源端口+目标 IP+目标端口”定位通信对象，仅单向发送数据报&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;h2 id=&#34;应用场景&#34;&gt;应用场景
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;HTTP
+&lt;ul&gt;
+&lt;li&gt;网页浏览&lt;/li&gt;
+&lt;li&gt;接口调用&lt;/li&gt;
+&lt;li&gt;文件下载&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;TCP
+&lt;ul&gt;
+&lt;li&gt;文件传输&lt;/li&gt;
+&lt;li&gt;邮件收发&lt;/li&gt;
+&lt;li&gt;远程登录&lt;/li&gt;
+&lt;li&gt;HTTP/1.0/1.1/2 的传输载体&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;UDP
+&lt;ul&gt;
+&lt;li&gt;实时通信&lt;/li&gt;
+&lt;li&gt;视频直播&lt;/li&gt;
+&lt;li&gt;在线游戏&lt;/li&gt;
+&lt;li&gt;DNS 查询&lt;/li&gt;
+&lt;li&gt;HTTP/3 的传输载体&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;协议间的依赖关系&#34;&gt;协议间的依赖关系
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;HTTP 与 TCP 的依赖：HTTP 所有数据必须通过 TCP 连接传输，TCP 为 HTTP 提供可靠的数据通道。&lt;/li&gt;
+&lt;li&gt;HTTP 与 UDP 的关系：HTTP 本身不使用 UDP 进行传输，但 HTTP/3 采用 QUIC 协议，QUIC 基于 UDP 实现，提供类似 TCP 的可靠传输功能。&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         </item>
         <item>
