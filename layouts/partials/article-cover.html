@@ -1,0 +1,40 @@
+{{/* partial: article-cover.html
+Usage: {{ partial "article-cover.html" . }}
+Expects the page context (dot) passed in. Renders <img> for .Params.cover or site default.
+*/}}
+
+{{ $ctx := . }}
+{{ $base := "img/covers" }}
+{{ $found := "" }}
+
+{{/* helper: build candidates for read path (static/...) and public url (img/...) */}}
+{{ $tryRead := slice }}
+{{ $tryURL := slice }}
+
+{{ if $ctx.Params.cover }}
+{{ $name := $ctx.Params.cover }}
+{{ if not (in $name ".") }}
+{{ $tryRead = (slice (printf "static/%s/%s" $base $name) (printf "static/%s/%s.svg" $base $name)) }}
+{{ $tryURL = (slice (printf "%s/%s" $base $name) (printf "%s/%s.svg" $base $name)) }}
+{{ else }}
+{{ $tryRead = (slice (printf "static/%s/%s" $base $name)) }}
+{{ $tryURL = (slice (printf "%s/%s" $base $name)) }}
+{{ end }}
+{{ else if .Site.Params.defaultCover }}
+{{ $name := .Site.Params.defaultCover }}
+{{ $tryRead = (slice (printf "static/%s/%s" $base $name)) }}
+{{ $tryURL = (slice (printf "%s/%s" $base $name)) }}
+{{ end }}
+
+{{ range $i, $r := $tryRead }}
+{{ if eq $found "" }}
+{{ $content := readFile $r | default "" }}
+{{ if ne $content "" }}
+{{ $found = index $tryURL $i }}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{ if ne $found "" }}
+<img class="article-cover" src="{{ $found | relURL }}" alt="{{ $ctx.Title }}" loading="lazy">
+{{ end }}

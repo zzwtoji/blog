@@ -13,27 +13,7 @@
         <pubDate>Mon, 24 Nov 2025 16:27:37 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</guid>
-        <description>&lt;blockquote&gt;
-&lt;p&gt;nihao&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;hello_world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;我是&lt;code&gt;var&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;niaao&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;nihao&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;词法分析：识别词法单元 Token。&lt;/p&gt;
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 正则表达式与词法分析" /&gt;&lt;p&gt;词法分析：识别词法单元 Token。&lt;/p&gt;
 &lt;p&gt;正则表达式：正则文法的字符串表示形式。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;正则文法（3 型文法）
@@ -79,7 +59,7 @@
         <pubDate>Mon, 24 Nov 2025 16:13:53 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</guid>
-        <description>&lt;h2 id=&#34;词法分析&#34;&gt;词法分析
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 编译流程" /&gt;&lt;h2 id=&#34;词法分析&#34;&gt;词法分析
 &lt;/h2&gt;&lt;p&gt;读取源程序字符流，按语言规则拆分为语法单元（Token）。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Token

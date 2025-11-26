@@ -13,7 +13,7 @@
         <pubDate>Mon, 24 Nov 2025 09:05:14 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/p/http-%E4%B8%8E-tcpudp-%E7%9A%84%E5%B7%AE%E5%BC%82/</guid>
-        <description>&lt;h2 id=&#34;协议所属网络层&#34;&gt;协议所属网络层
+        <description>&lt;img src="https://megumi8821.netlify.app/img/ComputerNetworks.svg" alt="Featured image of post HTTP 与 TCP、UDP 的差异" /&gt;&lt;h2 id=&#34;协议所属网络层&#34;&gt;协议所属网络层
 &lt;/h2&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -224,7 +224,7 @@
         <pubDate>Sun, 23 Nov 2025 16:59:31 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/p/%E4%BA%94%E5%B1%82%E6%A8%A1%E5%9E%8B/</guid>
-        <description>&lt;p&gt;五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。&lt;/p&gt;
+        <description>&lt;img src="https://megumi8821.netlify.app/img/ComputerNetworks.svg" alt="Featured image of post 五层模型" /&gt;&lt;p&gt;五层模型从上到下依次为应用层、运输层、网络层、链路层、物理层。每一层只负责特定的功能，再通过与上下层的协作，完成端到端的数据传输。&lt;/p&gt;
 &lt;h2 id=&#34;应用层&#34;&gt;应用层
 &lt;/h2&gt;&lt;p&gt;直接面向用户，提供各类网络应用服务。&lt;/p&gt;
 &lt;h3 id=&#34;功能&#34;&gt;功能

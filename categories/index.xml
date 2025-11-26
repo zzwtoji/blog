@@ -13,7 +13,7 @@
         <pubDate>Mon, 24 Nov 2025 16:27:37 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/categories/principleofcompile/</guid>
-        <description></description>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/principleofcompile.svg" alt="Featured image of post PrincipleofCompile" /&gt;</description>
         </item>
         <item>
         <title>SoftwareEngineering</title>
@@ -21,7 +21,7 @@
         <pubDate>Mon, 24 Nov 2025 14:40:18 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/categories/softwareengineering/</guid>
-        <description></description>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/SoftwareEngineering.svg" alt="Featured image of post SoftwareEngineering" /&gt;</description>
         </item>
         <item>
         <title>ComputerNetworks</title>
@@ -29,15 +29,7 @@
         <pubDate>Mon, 24 Nov 2025 09:05:14 +0800</pubDate>
         
         <guid>https://megumi8821.netlify.app/categories/computernetworks/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Test</title>
-        <link>https://megumi8821.netlify.app/categories/test/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://megumi8821.netlify.app/categories/test/</guid>
-        <description>&lt;img src="https://megumi8821.netlify.app/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg" alt="Featured image of post Test" /&gt;</description>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/ComputerNetworks.svg" alt="Featured image of post ComputerNetworks" /&gt;</description>
         </item>
         
     </channel>

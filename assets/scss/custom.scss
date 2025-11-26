@@ -1,5 +1,6 @@
 /* =============================================================================
    个性化 CSS 样式
+   核心优化：统一圆角规范 + 代码结构整理
    ========================================================================== */
 
 /* -----------------------------------------------------------------------------
@@ -7,32 +8,44 @@
    ----------------------------------------------------------------------------- */
 :root {
     /* 布局相关 */
-    --main-top-padding: 15px;
-    --card-border-radius: 4px;
-    --tag-border-radius: 2px;
-    --section-separation: 20px;
+    --layout-main-top-padding: 15px;
+    --layout-section-separation: 20px;
+
+    /* 圆角统一规范 - 核心基础值 */
+    --border-radius-base: 6px;
+    --border-radius-sm: calc(var(--border-radius-base) - 2px);
+    --border-radius-md: calc(var(--border-radius-base) + 2px);
+    --border-radius-lg: calc(var(--border-radius-base) + 4px);
+    --border-radius-circle: 50%;
+    --border-radius-image-small: 17%;
+    /* 小图片特殊圆角 */
+
+    /* 组件尺寸 */
+    --component-card-border-radius: var(--border-radius-base);
+    --component-tag-border-radius: var(--border-radius-sm);
 
     /* 字体相关 */
-    --article-font-size: 1.8rem;
+    --font-size-article: 1.8rem;
+    --font-family-main: "HarmonyOS_Regular", Georgia, Serif;
 
     /* 主题颜色 */
-    --code-background-color: #f0f0f0;
-    --code-text-color: #333333;
     --color-text-primary: #333333;
     --color-text-secondary: #666666;
     --color-bg-primary: #ffffff;
     --color-bg-secondary: #f7f7f7;
     --color-border: #e0e0e0;
+    --color-code-background: #f0f0f0;
+    --color-code-text: #333333;
 
     /* 暗色模式 */
     &[data-scheme="dark"] {
-        --code-background-color: #2a2a2a;
-        --code-text-color: #e0e0e0;
         --color-text-primary: #e0e0e0;
         --color-text-secondary: #aaaaaa;
         --color-bg-primary: #1a1a1a;
         --color-bg-secondary: #252525;
         --color-border: #333333;
+        --color-code-background: #2a2a2a;
+        --color-code-text: #e0e0e0;
     }
 }
 
@@ -43,7 +56,7 @@
 /* 全局字体 */
 body,
 .article-content {
-    font-family: "HarmonyOS_Regular", Georgia, Serif;
+    font-family: var(--font-family-main);
 }
 
 /* 全局滚动条美化 */
@@ -58,7 +71,7 @@ html {
 
     ::-webkit-scrollbar-thumb {
         background-color: #d6dee1;
-        border-radius: 20px;
+        border-radius: var(--border-radius-lg);
         border: 6px solid transparent;
         background-clip: content-box;
     }
@@ -73,8 +86,8 @@ html {
     min-height: 100vh;
     align-items: flex-start;
     padding: 0 15px;
-    gap: var(--section-separation);
-    padding-top: var(--main-top-padding);
+    gap: var(--layout-section-separation);
+    padding-top: var(--layout-main-top-padding);
 
     @include respond(md) {
         padding: 0 37px;
@@ -95,7 +108,6 @@ html {
         order: -3;
         max-width: var(--left-sidebar-max-width);
         flex: 0 0 12%;
-        /* 基础宽度设置 */
     }
 
     .right-sidebar {
@@ -149,7 +161,6 @@ html {
         .welcome-sep,
         .menu-social,
         .widget,
-        .widget--toc,
         .related-content,
         .tagCloud,
         footer.site-footer,
@@ -171,6 +182,7 @@ html {
             flex: 1 1 100% !important;
             padding: 18px 12px !important;
             margin: 0 auto !important;
+            border-radius: 0;
         }
 
         /* 确保文章内容可见 */
@@ -203,8 +215,6 @@ html {
 
 /* 紧凑模式 - 移动端特殊交互 */
 @include respond(md) {
-
-    // 使用 mixin 统一断点
     .container.compact {
 
         /* 汉堡按钮固定在右上角 */
@@ -214,6 +224,7 @@ html {
             right: 12px !important;
             z-index: 9999 !important;
             display: inline-flex !important;
+            border-radius: var(--border-radius-sm);
         }
 
         /* 打开的菜单占满全屏 */
@@ -265,18 +276,17 @@ html {
     font-size: 1.6rem;
     background-color: var(--card-background);
     box-shadow: none;
-    /* 手机端下拉菜单会有莫名小方块 */
     display: none;
     margin: 0;
-    border-radius: 10px;
+    border-radius: var(--border-radius-lg);
     padding: 30px 30px;
+    gap: 30px;
 
     @include respond(xl) {
         padding: 15px 0;
         gap: 25px;
     }
 
-    &,
     .menu-bottom-section {
         gap: 30px;
     }
@@ -326,11 +336,11 @@ html {
             font-weight: bold;
         }
     }
-}
 
-/* 手机模式下的菜单滚动条美化 */
-.menu::-webkit-scrollbar {
-    display: none; //防止大屏幕时出现滚动条
+    /* 手机模式下的菜单滚动条美化 */
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 /* 欢迎栏 */
@@ -341,6 +351,7 @@ html {
     padding: 22px 26px;
     text-align: center;
     overflow: visible;
+    border-radius: var(--border-radius-base);
 
     .welcome-inner {
         display: flex;
@@ -395,6 +406,7 @@ html {
         opacity: 0.95;
         pointer-events: none;
         z-index: 0;
+        border-radius: var(--border-radius-base);
     }
 
     @include respond(md) {
@@ -411,7 +423,7 @@ html {
     height: 4px;
     margin: 10px auto 8px auto;
     position: relative;
-    border-radius: 2px;
+    border-radius: var(--border-radius-sm);
     background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.06) 8%, var(--color-border) 50%, rgba(0, 0, 0, 0.06) 92%, rgba(0, 0, 0, 0) 100%);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
@@ -424,7 +436,6 @@ html {
 /* 侧边栏（在紧凑模式下会被隐藏） */
 .sidebar {
     header {
-
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -439,17 +450,78 @@ html {
 
         .site-description {
             font-size: 1.3rem;
+            margin-bottom: 16px;
 
             @include respond(2xl) {
                 font-size: 1.6rem;
             }
-            margin-bottom: 16px;
         }
 
         .site-name {
             margin: 8px;
             font-size: 2rem;
         }
+    }
+}
+
+/* Section-card 右侧梯形徽章 */
+.section-card {
+    position: relative;
+    border: 1.25px solid var(--color-border, rgba(0, 0, 0, 0.06));
+    border-radius: var(--component-card-border-radius);
+
+    /* 创建右侧徽章容器 */
+    &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 240px;
+        pointer-events: none;
+        z-index: 0;
+        background: transparent;
+    }
+
+    .section-image {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        box-sizing: border-box;
+        z-index: 2;
+
+        img {
+            width: 100%;
+            height: calc(100% - 14px);
+            object-fit: cover;
+            display: block;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%);
+            border-radius: var(--border-radius-sm);
+        }
+    }
+
+    /* 确保内容不重叠徽章区域 */
+    .section-details {
+        padding-right: 260px;
+    }
+}
+
+/* 文章列表卡片增强样式 */
+.article-list--tile article,
+.article-list article {
+    border: 1.5px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    border-radius: var(--border-radius-md);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(0, 0, 0, 0.12);
     }
 }
 
@@ -462,12 +534,10 @@ html {
     article {
         padding: 8px 6px;
         background: transparent;
-        border: 5px;
         gap: 5px;
 
         .article-image {
-            display: none !important;
-            /* 全局隐藏文章列表图片 */
+            display: block !important;
         }
 
         .article-meta {
@@ -489,8 +559,7 @@ html {
 
     /* 紧凑模式的文章列表卡片 */
     &--compact {
-        border-radius: var(--card-border-radius);
-        box-shadow: var(--shadow-l1);
+        border-radius: var(--component-card-border-radius);
         background-color: var(--card-background);
         --image-size: 50px;
 
@@ -504,6 +573,7 @@ html {
                 align-items: center;
                 padding: var(--small-card-padding);
                 gap: 15px;
+                flex-wrap: wrap;
             }
 
             &:not(:last-of-type) {
@@ -511,7 +581,7 @@ html {
             }
 
             .article-details {
-                flex-grow: 1;
+                flex: 1 1 50%;
                 padding: 0;
                 min-height: var(--image-size);
                 gap: 10px;
@@ -529,13 +599,22 @@ html {
             /* 紧凑列表中的图片特殊处理 */
             .article-image {
                 display: block !important;
+                flex: 0 0 50%;
+                max-width: 50%;
+                box-sizing: border-box;
 
                 img {
                     width: var(--image-size);
                     height: var(--image-size);
                     object-fit: cover;
-                    border-radius: 17%;
-                    /* 小图片圆角样式 */
+                }
+
+                @include respond(md) {
+                    img {
+                        width: 100%;
+                        height: auto;
+                        border-radius: var(--border-radius-sm);
+                    }
                 }
             }
 
@@ -566,15 +645,44 @@ html {
         border-bottom: 1px solid var(--color-border);
         background: none;
 
+        /* 显示图片 */
         .article-image {
-            display: none !important;
-            /* 隐藏图片 */
+            display: block !important;
+            box-sizing: border-box;
+            margin-left: auto;
         }
     }
 
     a {
         text-decoration: none;
         color: inherit;
+    }
+
+    /* 中等及以上屏幕：详情左，图片右 */
+    @include respond(md) {
+        article>a {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        article .article-details {
+            flex: 1 1 50%;
+            padding-right: 16px;
+        }
+
+        article .article-image {
+            flex: 0 0 50%;
+            max-width: 50%;
+            box-sizing: border-box;
+        }
+
+        article .article-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
     }
 }
 
@@ -587,7 +695,7 @@ html {
             img {
                 max-width: 96% !important;
                 height: auto !important;
-                border-radius: 8px;
+                border-radius: var(--border-radius-base);
             }
 
             /* 引用块 */
@@ -598,6 +706,7 @@ html {
                 background-color: #ffffff;
                 color: var(--color-text-secondary);
                 line-height: 1.8;
+                border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 
                 p {
                     margin: 0;
@@ -616,10 +725,10 @@ html {
                 display: inline-block;
                 padding: 2px 6px;
                 margin: 0 2px;
-                background-color: var(--code-background-color);
-                color: var(--code-text-color);
+                background-color: var(--color-code-background);
+                color: var(--color-code-text);
                 font-size: 0.9em;
-                border-radius: 5px;
+                border-radius: var(--border-radius-sm);
                 word-break: break-all;
             }
 
@@ -628,7 +737,7 @@ html {
                 position: relative;
                 margin: 10px 0;
                 padding: 10px;
-                border-radius: var(--card-border-radius);
+                border-radius: var(--component-card-border-radius);
                 overflow-x: auto;
                 line-height: 1.5;
 
@@ -666,6 +775,46 @@ html {
             }
         }
     }
+}
+
+/* 封面图片样式（统一圆角） */
+.article-cover {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius-sm);
+}
+
+.article-list .article-image img.article-cover,
+.article-list .article-image img {
+    width: var(--image-size, 60px);
+    height: var(--image-size, 60px);
+    object-fit: cover;
+    display: block;
+}
+
+/* 强制显示图片覆盖 */
+.article-image,
+.article-list .article-image,
+.archives .article-image,
+.page-archives .article-image,
+.tags-list .article-image,
+.categories-list .article-image,
+.article-list-item .article-image {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.article-image img,
+.article-list .article-image img,
+.article-cover {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
 }
 
 /* -----------------------------------------------------------------------------
