@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>短语 on zzw</title>
+        <link>https://megumi8821.netlify.app/tags/%E7%9F%AD%E8%AF%AD/</link>
+        <description>Recent content in 短语 on zzw</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>megumi8821</copyright>
+        <lastBuildDate>Tue, 09 Dec 2025 19:40:40 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/tags/%E7%9F%AD%E8%AF%AD/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>文法 语法树 短语</title>
+        <link>https://megumi8821.netlify.app/p/%E6%96%87%E6%B3%95-%E8%AF%AD%E6%B3%95%E6%A0%91-%E7%9F%AD%E8%AF%AD/</link>
+        <pubDate>Tue, 09 Dec 2025 19:40:40 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E6%96%87%E6%B3%95-%E8%AF%AD%E6%B3%95%E6%A0%91-%E7%9F%AD%E8%AF%AD/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 文法 语法树 短语" /&gt;&lt;h2 id=&#34;概念&#34;&gt;概念
+&lt;/h2&gt;&lt;h3 id=&#34;文法&#34;&gt;文法
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;句型：由“ $\rightarrow$ ” 推导出的符号串。&lt;/li&gt;
+&lt;li&gt;句子：句型中只含有终结符。
+&lt;ul&gt;
+&lt;li&gt;终结符：小写字母、+、-、*、/、=和标点符号。
+&lt;ul&gt;
+&lt;li&gt;非终结符：大写字母和尖括号&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;包裹的符号。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;语言 L（G）：一切句子的集合。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;短语&#34;&gt;短语
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;短语：所有非终结符的所有子树的叶子节点按顺序连接的符号串。&lt;/li&gt;
+&lt;li&gt;直接短语：一步推导的短语。&lt;/li&gt;
+&lt;li&gt;句柄：最左边的直接短语。&lt;/li&gt;
+&lt;li&gt;素短语：至少含有 1 个终结符且除自身外不再含有更小的素短语。&lt;/li&gt;
+&lt;li&gt;最左素短语：最左边的素短语。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;最左推导&#34;&gt;最左推导
+&lt;/h2&gt;&lt;p&gt;每次优先选择句型中最左侧的非终结符进行替换，逐步推导出句子的过程。&lt;/p&gt;
+&lt;h2 id=&#34;最右推导规范推导&#34;&gt;最右推导（规范推导）
+&lt;/h2&gt;&lt;p&gt;每次优先选择句型中最右侧的非终结符进行替换，推导顺序与语法分析中的归约过程相反。&lt;/p&gt;
+&lt;h2 id=&#34;语法推导树&#34;&gt;语法推导树
+&lt;/h2&gt;&lt;p&gt;以文法的开始符号为根节点、非终结符为中间节点、终结符为叶节点，直观反映句子从开始符号经规则替换逐步生成过程的树形结构。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;二义性文法：存在至少一个句子，对应两种及以上不同语法推导树。&lt;/li&gt;
+&lt;li&gt;无二义性文法：所有句子都只有唯一的语法推导树。&lt;/li&gt;
+&lt;li&gt;二义性是文法属性。一个存在二义性的文法，可以通过修改规则变成无二义性的文法。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

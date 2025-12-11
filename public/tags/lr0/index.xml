@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>LR(0) on zzw</title>
+        <link>https://megumi8821.netlify.app/tags/lr0/</link>
+        <description>Recent content in LR(0) on zzw</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>megumi8821</copyright>
+        <lastBuildDate>Wed, 10 Dec 2025 17:06:34 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/tags/lr0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LR(0) SLR(1)</title>
+        <link>https://megumi8821.netlify.app/p/lr0-slr1/</link>
+        <pubDate>Wed, 10 Dec 2025 17:06:34 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/lr0-slr1/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post LR(0) SLR(1)" /&gt;&lt;ul&gt;
+&lt;li&gt;原文法：S $\rightarrow$bBB
+&lt;ul&gt;
+&lt;li&gt;移进： S $\rightarrow \cdot$ bBB&lt;/li&gt;
+&lt;li&gt;归约： S $\rightarrow$ bBB$\cdot$&lt;/li&gt;
+&lt;li&gt;待约： S $\rightarrow$ b$\cdot$BB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;lr0-文法&#34;&gt;LR(0) 文法
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;拓广文法。&lt;/li&gt;
+&lt;li&gt;LR(0) 有限自动机 DFA。&lt;/li&gt;
+&lt;li&gt;LR(0) 分析表。&lt;/li&gt;
+&lt;li&gt;分析流程。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;e.g.&lt;br&gt;
+S $\rightarrow$ CC&lt;br&gt;
+C $\rightarrow$ cC | d&lt;/p&gt;
+&lt;p&gt;拓广文法：&lt;/p&gt;
+&lt;p&gt;（0）S&amp;rsquo; $\rightarrow$ S&lt;br&gt;
+（1）S $\rightarrow$ CC&lt;br&gt;
+（2）C $\rightarrow$ cC&lt;br&gt;
+（3）C $\rightarrow$ d&lt;/p&gt;
+&lt;p&gt;项目集族：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$I_0$
+&lt;ul&gt;
+&lt;li&gt;S&amp;rsquo; $\rightarrow$ $\cdot$ S&lt;/li&gt;
+&lt;li&gt;S $\rightarrow$ $\cdot$ CC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ cC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{S}{\longrightarrow} I_1$
+&lt;ul&gt;
+&lt;li&gt;S&amp;rsquo; $\rightarrow$ S $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{C}{\longrightarrow} I_2$
+&lt;ul&gt;
+&lt;li&gt;S $\rightarrow$ C $\cdot$ C&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ cC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{c}{\longrightarrow} I_3$
+&lt;ul&gt;
+&lt;li&gt;C $\rightarrow$ c $\cdot$ C&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ cC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{d}{\longrightarrow} I_4$
+&lt;ul&gt;
+&lt;li&gt;C $\rightarrow$ d $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_2 \stackrel{C}{\longrightarrow} I_5$
+&lt;ul&gt;
+&lt;li&gt;S $\rightarrow$ CC $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_2 \stackrel{c}{\longrightarrow} I_3$&lt;/li&gt;
+&lt;li&gt;$I_2 \stackrel{d}{\longrightarrow} I_4$&lt;/li&gt;
+&lt;li&gt;$I_3 \stackrel{C}{\longrightarrow} I_6$
+&lt;ul&gt;
+&lt;li&gt;C $\rightarrow$ cC $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_3 \stackrel{c}{\longrightarrow} I_3$&lt;/li&gt;
+&lt;li&gt;$I_3 \stackrel{d}{\longrightarrow} I_4$ （图片缺了这根）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic3.zhimg.com/v2-319d6122785e122d6680424161acb120_1440w.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;LR(0) 分析表：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;c&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;d&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;C&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;acc&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;FOLLOW 集：&lt;/p&gt;
+&lt;p&gt;S $\rightarrow$ CC&lt;br&gt;
+C $\rightarrow$ cC | d&lt;/p&gt;
+&lt;p&gt;FOLLOW(S) = { $ }&lt;br&gt;
+FOLLOW(C) = { c, d, $ }&lt;/p&gt;
+&lt;p&gt;SLR(1) 分析表：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;c&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;d&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;C&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;acc&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

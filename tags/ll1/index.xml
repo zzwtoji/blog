@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>LL(1) on zzw</title>
+        <link>https://megumi8821.netlify.app/tags/ll1/</link>
+        <description>Recent content in LL(1) on zzw</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>megumi8821</copyright>
+        <lastBuildDate>Wed, 10 Dec 2025 15:01:14 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/tags/ll1/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LL(1) 文法</title>
+        <link>https://megumi8821.netlify.app/p/ll1-%E6%96%87%E6%B3%95/</link>
+        <pubDate>Wed, 10 Dec 2025 15:01:14 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/ll1-%E6%96%87%E6%B3%95/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post LL(1) 文法" /&gt;&lt;h2 id=&#34;左递归&#34;&gt;左递归
+&lt;/h2&gt;&lt;p&gt;产生式左侧字母和右侧首字母相同，$S \rightarrow Sa$。&lt;/p&gt;
+&lt;h3 id=&#34;消除左递归&#34;&gt;消除左递归
+&lt;/h3&gt;$$ P \rightarrow P \alpha | \beta \Rightarrow\left\{
+\begin{array}{rcl}
+P \rightarrow \beta P&#39;\\
+P&#39; \rightarrow \alpha P&#39; | \epsilon
+\end{array} \right. $$&lt;h2 id=&#34;左公因子&#34;&gt;左公因子
+&lt;/h2&gt;&lt;p&gt;产生式右侧有多个产生式以相同符号开头，$P \rightarrow \alpha \beta_1 | \alpha \beta_2$，$P \rightarrow \alpha（ \beta_1 | \beta_2）$。&lt;/p&gt;
+&lt;h3 id=&#34;消除左公因子&#34;&gt;消除左公因子
+&lt;/h3&gt;$$ P \rightarrow \alpha \beta_1 | \alpha \beta_2 \Rightarrow\left\{
+\begin{array}{rcl}
+P \rightarrow \alpha P&#39;\\
+P&#39; \rightarrow \beta_1 | \beta_2
+\end{array} \right. $$&lt;h2 id=&#34;first-集&#34;&gt;FIRST 集
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;A $\rightarrow$ aB，FIRST(A)={a}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ aB| $\epsilon$，FIRST(A)={a，$\epsilon$}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ BCD，FIRST(A)=FIRST(B)，B $\nrightarrow$ $\epsilon$&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ BCD 且 B $\rightarrow$ $\epsilon$，FIRST(A)={FIRST(C)}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ a，FIRST(A)={a}&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;follow-集&#34;&gt;FOLLOW 集
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;$ 为开始符号，FOLLOW(S)={$，&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ $\alpha B \beta$，FOLLOW(B)=FIRST($\beta$) - {$\epsilon$}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ $\alpha B \beta$ 且 $\beta \rightarrow \epsilon$，FOLLOW(B)=FOLLOW(A)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;select-集-a-rightarrow-alpha&#34;&gt;SELECT 集 $A \rightarrow \alpha$
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;若 $\alpha \rightarrow \epsilon$，则 SELECT(A $\rightarrow \alpha$)=FOLLOW(A)&lt;/li&gt;
+&lt;li&gt;若 $\alpha \nrightarrow \epsilon$，则 SELECT(A $\rightarrow \alpha$)=FIRST($\alpha$)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;判断-ll1-文法&#34;&gt;判断 LL(1) 文法
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;不含左递归。&lt;/li&gt;
+&lt;li&gt;不含左公因子。$A \rightarrow aB| \epsilon$，则 $A \rightarrow aB$ 和 $A \rightarrow \epsilon$ 的 FIRST 集无交集。&lt;/li&gt;
+&lt;li&gt;FIRST 集中含有 $\epsilon$ 时，FIRST(A) $\cap$ FOLLOW(A)=$ \emptyset $。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;e.g.&lt;/p&gt;
+&lt;p&gt;E $\rightarrow$ E + T | T&lt;br&gt;
+T $\rightarrow$ T * F | F&lt;br&gt;
+F $\rightarrow$ ( E ) | i&lt;/p&gt;
+&lt;p&gt;消除左递归：&lt;/p&gt;
+&lt;p&gt;E $\rightarrow$ T E&amp;rsquo;&lt;br&gt;
+E&amp;rsquo; $\rightarrow$ + T E&amp;rsquo; | $\epsilon$&lt;br&gt;
+T $\rightarrow$ F T&amp;rsquo;&lt;br&gt;
+T&amp;rsquo; $\rightarrow$ * F T&amp;rsquo; | $\epsilon$&lt;br&gt;
+F $\rightarrow$ ( E ) | i&lt;/p&gt;
+&lt;p&gt;计算 FIRST 集：&lt;/p&gt;
+&lt;p&gt;FIRST(E)={FIRST(T)}={ ( , i }&lt;br&gt;
+FIRST(E&amp;rsquo;)={ + , $\epsilon$ }&lt;br&gt;
+FIRST(T)={FIRST(F)}={ ( , i }&lt;br&gt;
+FIRST(T&amp;rsquo;)={ * , $\epsilon$ }&lt;br&gt;
+FIRST(F)={ ( , i }&lt;/p&gt;
+&lt;p&gt;计算 FOLLOW 集：&lt;/p&gt;
+&lt;p&gt;FOLLOW(E)={$ , ) }&lt;br&gt;
+FOLLOW(E&amp;rsquo;)={FOLLOW(E)}={$ , ) }&lt;br&gt;
+FOLLOW(T)={FIRST(E&amp;rsquo;)} - {$\epsilon$} $\cup$ FOLLOW(E)={ + , $ , ) }&lt;br&gt;
+FOLLOW(T&amp;rsquo;)={FOLLOW(T)}={ + , $ , ) }&lt;br&gt;
+FOLLOW(F)={FIRST(T&amp;rsquo;)} - {$\epsilon$} $\cup$ FOLLOW(T)={ * , + , $ , ) }&lt;/p&gt;
+&lt;p&gt;计算 SELECT 集：&lt;/p&gt;
+&lt;p&gt;SELECT(E $\rightarrow$ T E&amp;rsquo;)=FIRST(T)={ ( , i }&lt;br&gt;
+SELECT(E&amp;rsquo; $\rightarrow$ + T E&amp;rsquo;)={ + }&lt;br&gt;
+SELECT(E&amp;rsquo; $\rightarrow$ $\epsilon$)=FOLLOW(E&amp;rsquo;)={$ , ) }&lt;br&gt;
+SELECT(T $\rightarrow$ F T&amp;rsquo;)=FIRST(F)={ ( , i }&lt;br&gt;
+SELECT(T&amp;rsquo; $\rightarrow$ * F T&amp;rsquo;)={ * }&lt;br&gt;
+SELECT(T&amp;rsquo; $\rightarrow$ $\epsilon$)=FOLLOW(T&amp;rsquo;)={ + , $ , ) }&lt;br&gt;
+SELECT(F $\rightarrow$ ( E ))={ ( }&lt;br&gt;
+SELECT(F $\rightarrow$ i)={ i }&lt;/p&gt;
+&lt;p&gt;分析表：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;(&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;)&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;i&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;+&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;*&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;$&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E→TE&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E→TE&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→ε&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→+TE&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→ε&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→ε&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→ε&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→*FT&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→ε&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→(E)&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;对输入串 i*i+i 的分析过程：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;栈&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;输入串&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;输出&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E→TE&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F*&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→*FT&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→$\epsilon$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T+&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→+TE&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→$\epsilon$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→$\epsilon$&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

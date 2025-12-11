@@ -26,7 +26,7 @@
 
     /* 字体相关 */
     --font-size-article: 1.8rem;
-    --font-family-main: "HarmonyOS_Regular", Georgia, Serif;
+    --font-family-main: "Times New Roman", "HarmonyOS_Regular", Georgia, Serif;
 
     /* 主题颜色 */
     --color-text-primary: #333333;
@@ -723,7 +723,7 @@ html {
             /* 行内代码 */
             code {
                 display: inline-block;
-                padding: 2px 6px;
+                padding: 1px 4px;
                 margin: 0 2px;
                 background-color: var(--color-code-background);
                 color: var(--color-code-text);

@@ -7,7 +7,71 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>megumi8821</copyright>
-        <lastBuildDate>Mon, 24 Nov 2025 14:40:18 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 10 Dec 2025 17:06:34 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LR(0)</title>
+        <link>https://megumi8821.netlify.app/tags/lr0/</link>
+        <pubDate>Wed, 10 Dec 2025 17:06:34 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/lr0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SLR(1)</title>
+        <link>https://megumi8821.netlify.app/tags/slr1/</link>
+        <pubDate>Wed, 10 Dec 2025 17:06:34 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/slr1/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>LL(1)</title>
+        <link>https://megumi8821.netlify.app/tags/ll1/</link>
+        <pubDate>Wed, 10 Dec 2025 15:01:14 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/ll1/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>DFA</title>
+        <link>https://megumi8821.netlify.app/tags/dfa/</link>
+        <pubDate>Wed, 10 Dec 2025 11:40:52 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/dfa/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>NFA</title>
+        <link>https://megumi8821.netlify.app/tags/nfa/</link>
+        <pubDate>Wed, 10 Dec 2025 11:40:52 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/nfa/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>短语</title>
+        <link>https://megumi8821.netlify.app/tags/%E7%9F%AD%E8%AF%AD/</link>
+        <pubDate>Tue, 09 Dec 2025 19:40:40 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E7%9F%AD%E8%AF%AD/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>文法</title>
+        <link>https://megumi8821.netlify.app/tags/%E6%96%87%E6%B3%95/</link>
+        <pubDate>Tue, 09 Dec 2025 19:40:40 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E6%96%87%E6%B3%95/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>语法树</title>
+        <link>https://megumi8821.netlify.app/tags/%E8%AF%AD%E6%B3%95%E6%A0%91/</link>
+        <pubDate>Tue, 09 Dec 2025 19:40:40 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/tags/%E8%AF%AD%E6%B3%95%E6%A0%91/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>盒图</title>
         <link>https://megumi8821.netlify.app/tags/%E7%9B%92%E5%9B%BE/</link>
         <pubDate>Mon, 24 Nov 2025 14:40:18 +0800</pubDate>

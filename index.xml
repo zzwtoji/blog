@@ -7,113 +7,665 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>megumi8821</copyright>
-        <lastBuildDate>Mon, 24 Nov 2025 16:27:37 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>正则表达式与词法分析</title>
-        <link>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</link>
-        <pubDate>Mon, 24 Nov 2025 16:27:37 +0800</pubDate>
+        <lastBuildDate>Wed, 10 Dec 2025 17:06:34 +0800</lastBuildDate><atom:link href="https://megumi8821.netlify.app/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LR(0) SLR(1)</title>
+        <link>https://megumi8821.netlify.app/p/lr0-slr1/</link>
+        <pubDate>Wed, 10 Dec 2025 17:06:34 +0800</pubDate>
         
-        <guid>https://megumi8821.netlify.app/p/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/</guid>
-        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 正则表达式与词法分析" /&gt;&lt;h2 id=&#34;正则表达式reregular-expression&#34;&gt;正则表达式（RE，Regular Expression）
-&lt;/h2&gt;&lt;p&gt;正则表达式是用来描述正则语言的形式化句子。&lt;/p&gt;
-&lt;h3 id=&#34;常用运算&#34;&gt;常用运算
-&lt;/h3&gt;&lt;p&gt;若$L(r_i)$是$r_i$匹配的字符串集合。&lt;/p&gt;
-&lt;h4 id=&#34;串接&#34;&gt;串接
-&lt;/h4&gt;&lt;p&gt;将多个正则表达式按顺序拼接，匹配时要求文本按顺序匹配所有子表达式。&lt;/p&gt;
-$$L(r_1r_2)=\{s_1s_2|s_1 \in L(r_1), s_2 \in L(r_2)\}$$&lt;h4 id=&#34;并&#34;&gt;并
-&lt;/h4&gt;&lt;p&gt;匹配多个正则表达式中的任意一个。&lt;/p&gt;
-$$L(r_1|r_2)=L(r_1) \cup L(r_2)$$&lt;p&gt;多个表达式的并$r_1|r_2|&amp;hellip;|r_n$，其语义为$\bigcup_{n}^{i=1}L(r_i)$。&lt;/p&gt;
-&lt;h4 id=&#34;闭包&#34;&gt;闭包
-&lt;/h4&gt;&lt;h4 id=&#34;字符类&#34;&gt;字符类
-&lt;/h4&gt;&lt;h4 id=&#34;重复技术&#34;&gt;重复技术
-&lt;/h4&gt;&lt;h3 id=&#34;常用语法&#34;&gt;常用语法
-&lt;/h3&gt;&lt;h4 id=&#34;标识符&#34;&gt;标识符
-&lt;/h4&gt;&lt;h4 id=&#34;整数&#34;&gt;整数
-&lt;/h4&gt;&lt;h4 id=&#34;浮点数&#34;&gt;浮点数
-&lt;/h4&gt;&lt;h4 id=&#34;单点注释&#34;&gt;单点注释
-&lt;/h4&gt;</description>
+        <guid>https://megumi8821.netlify.app/p/lr0-slr1/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post LR(0) SLR(1)" /&gt;&lt;ul&gt;
+&lt;li&gt;原文法：S $\rightarrow$bBB
+&lt;ul&gt;
+&lt;li&gt;移进： S $\rightarrow \cdot$ bBB&lt;/li&gt;
+&lt;li&gt;归约： S $\rightarrow$ bBB$\cdot$&lt;/li&gt;
+&lt;li&gt;待约： S $\rightarrow$ b$\cdot$BB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;lr0-文法&#34;&gt;LR(0) 文法
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;拓广文法。&lt;/li&gt;
+&lt;li&gt;LR(0) 有限自动机 DFA。&lt;/li&gt;
+&lt;li&gt;LR(0) 分析表。&lt;/li&gt;
+&lt;li&gt;分析流程。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;e.g.&lt;br&gt;
+S $\rightarrow$ CC&lt;br&gt;
+C $\rightarrow$ cC | d&lt;/p&gt;
+&lt;p&gt;拓广文法：&lt;/p&gt;
+&lt;p&gt;（0）S&amp;rsquo; $\rightarrow$ S&lt;br&gt;
+（1）S $\rightarrow$ CC&lt;br&gt;
+（2）C $\rightarrow$ cC&lt;br&gt;
+（3）C $\rightarrow$ d&lt;/p&gt;
+&lt;p&gt;项目集族：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$I_0$
+&lt;ul&gt;
+&lt;li&gt;S&amp;rsquo; $\rightarrow$ $\cdot$ S&lt;/li&gt;
+&lt;li&gt;S $\rightarrow$ $\cdot$ CC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ cC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{S}{\longrightarrow} I_1$
+&lt;ul&gt;
+&lt;li&gt;S&amp;rsquo; $\rightarrow$ S $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{C}{\longrightarrow} I_2$
+&lt;ul&gt;
+&lt;li&gt;S $\rightarrow$ C $\cdot$ C&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ cC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{c}{\longrightarrow} I_3$
+&lt;ul&gt;
+&lt;li&gt;C $\rightarrow$ c $\cdot$ C&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ cC&lt;/li&gt;
+&lt;li&gt;C $\rightarrow$ $\cdot$ d&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_0 \stackrel{d}{\longrightarrow} I_4$
+&lt;ul&gt;
+&lt;li&gt;C $\rightarrow$ d $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_2 \stackrel{C}{\longrightarrow} I_5$
+&lt;ul&gt;
+&lt;li&gt;S $\rightarrow$ CC $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_2 \stackrel{c}{\longrightarrow} I_3$&lt;/li&gt;
+&lt;li&gt;$I_2 \stackrel{d}{\longrightarrow} I_4$&lt;/li&gt;
+&lt;li&gt;$I_3 \stackrel{C}{\longrightarrow} I_6$
+&lt;ul&gt;
+&lt;li&gt;C $\rightarrow$ cC $\cdot$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;$I_3 \stackrel{c}{\longrightarrow} I_3$&lt;/li&gt;
+&lt;li&gt;$I_3 \stackrel{d}{\longrightarrow} I_4$ （图片缺了这根）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic3.zhimg.com/v2-319d6122785e122d6680424161acb120_1440w.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;LR(0) 分析表：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;c&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;d&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;C&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;acc&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;FOLLOW 集：&lt;/p&gt;
+&lt;p&gt;S $\rightarrow$ CC&lt;br&gt;
+C $\rightarrow$ cC | d&lt;/p&gt;
+&lt;p&gt;FOLLOW(S) = { $ }&lt;br&gt;
+FOLLOW(C) = { c, d, $ }&lt;/p&gt;
+&lt;p&gt;SLR(1) 分析表：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;ACTION&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;GOTO&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;c&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;d&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;C&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;0&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;acc&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;S4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;6&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;R2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
         </item>
         <item>
-        <title>编译流程</title>
-        <link>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</link>
-        <pubDate>Mon, 24 Nov 2025 16:13:53 +0800</pubDate>
+        <title>LL(1) 文法</title>
+        <link>https://megumi8821.netlify.app/p/ll1-%E6%96%87%E6%B3%95/</link>
+        <pubDate>Wed, 10 Dec 2025 15:01:14 +0800</pubDate>
         
-        <guid>https://megumi8821.netlify.app/p/%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B/</guid>
-        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 编译流程" /&gt;&lt;h2 id=&#34;词法分析&#34;&gt;词法分析
-&lt;/h2&gt;&lt;p&gt;读取源程序字符流，按语言规则拆分为语法单元（Token）。&lt;/p&gt;
+        <guid>https://megumi8821.netlify.app/p/ll1-%E6%96%87%E6%B3%95/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post LL(1) 文法" /&gt;&lt;h2 id=&#34;左递归&#34;&gt;左递归
+&lt;/h2&gt;&lt;p&gt;产生式左侧字母和右侧首字母相同，$S \rightarrow Sa$。&lt;/p&gt;
+&lt;h3 id=&#34;消除左递归&#34;&gt;消除左递归
+&lt;/h3&gt;$$ P \rightarrow P \alpha | \beta \Rightarrow\left\{
+\begin{array}{rcl}
+P \rightarrow \beta P&#39;\\
+P&#39; \rightarrow \alpha P&#39; | \epsilon
+\end{array} \right. $$&lt;h2 id=&#34;左公因子&#34;&gt;左公因子
+&lt;/h2&gt;&lt;p&gt;产生式右侧有多个产生式以相同符号开头，$P \rightarrow \alpha \beta_1 | \alpha \beta_2$，$P \rightarrow \alpha（ \beta_1 | \beta_2）$。&lt;/p&gt;
+&lt;h3 id=&#34;消除左公因子&#34;&gt;消除左公因子
+&lt;/h3&gt;$$ P \rightarrow \alpha \beta_1 | \alpha \beta_2 \Rightarrow\left\{
+\begin{array}{rcl}
+P \rightarrow \alpha P&#39;\\
+P&#39; \rightarrow \beta_1 | \beta_2
+\end{array} \right. $$&lt;h2 id=&#34;first-集&#34;&gt;FIRST 集
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;A $\rightarrow$ aB，FIRST(A)={a}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ aB| $\epsilon$，FIRST(A)={a，$\epsilon$}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ BCD，FIRST(A)=FIRST(B)，B $\nrightarrow$ $\epsilon$&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ BCD 且 B $\rightarrow$ $\epsilon$，FIRST(A)={FIRST(C)}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ a，FIRST(A)={a}&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;follow-集&#34;&gt;FOLLOW 集
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;$ 为开始符号，FOLLOW(S)={$，&amp;hellip;}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ $\alpha B \beta$，FOLLOW(B)=FIRST($\beta$) - {$\epsilon$}&lt;/li&gt;
+&lt;li&gt;A $\rightarrow$ $\alpha B \beta$ 且 $\beta \rightarrow \epsilon$，FOLLOW(B)=FOLLOW(A)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;select-集-a-rightarrow-alpha&#34;&gt;SELECT 集 $A \rightarrow \alpha$
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;若 $\alpha \rightarrow \epsilon$，则 SELECT(A $\rightarrow \alpha$)=FOLLOW(A)&lt;/li&gt;
+&lt;li&gt;若 $\alpha \nrightarrow \epsilon$，则 SELECT(A $\rightarrow \alpha$)=FIRST($\alpha$)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;判断-ll1-文法&#34;&gt;判断 LL(1) 文法
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;不含左递归。&lt;/li&gt;
+&lt;li&gt;不含左公因子。$A \rightarrow aB| \epsilon$，则 $A \rightarrow aB$ 和 $A \rightarrow \epsilon$ 的 FIRST 集无交集。&lt;/li&gt;
+&lt;li&gt;FIRST 集中含有 $\epsilon$ 时，FIRST(A) $\cap$ FOLLOW(A)=$ \emptyset $。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;e.g.&lt;/p&gt;
+&lt;p&gt;E $\rightarrow$ E + T | T&lt;br&gt;
+T $\rightarrow$ T * F | F&lt;br&gt;
+F $\rightarrow$ ( E ) | i&lt;/p&gt;
+&lt;p&gt;消除左递归：&lt;/p&gt;
+&lt;p&gt;E $\rightarrow$ T E&amp;rsquo;&lt;br&gt;
+E&amp;rsquo; $\rightarrow$ + T E&amp;rsquo; | $\epsilon$&lt;br&gt;
+T $\rightarrow$ F T&amp;rsquo;&lt;br&gt;
+T&amp;rsquo; $\rightarrow$ * F T&amp;rsquo; | $\epsilon$&lt;br&gt;
+F $\rightarrow$ ( E ) | i&lt;/p&gt;
+&lt;p&gt;计算 FIRST 集：&lt;/p&gt;
+&lt;p&gt;FIRST(E)={FIRST(T)}={ ( , i }&lt;br&gt;
+FIRST(E&amp;rsquo;)={ + , $\epsilon$ }&lt;br&gt;
+FIRST(T)={FIRST(F)}={ ( , i }&lt;br&gt;
+FIRST(T&amp;rsquo;)={ * , $\epsilon$ }&lt;br&gt;
+FIRST(F)={ ( , i }&lt;/p&gt;
+&lt;p&gt;计算 FOLLOW 集：&lt;/p&gt;
+&lt;p&gt;FOLLOW(E)={$ , ) }&lt;br&gt;
+FOLLOW(E&amp;rsquo;)={FOLLOW(E)}={$ , ) }&lt;br&gt;
+FOLLOW(T)={FIRST(E&amp;rsquo;)} - {$\epsilon$} $\cup$ FOLLOW(E)={ + , $ , ) }&lt;br&gt;
+FOLLOW(T&amp;rsquo;)={FOLLOW(T)}={ + , $ , ) }&lt;br&gt;
+FOLLOW(F)={FIRST(T&amp;rsquo;)} - {$\epsilon$} $\cup$ FOLLOW(T)={ * , + , $ , ) }&lt;/p&gt;
+&lt;p&gt;计算 SELECT 集：&lt;/p&gt;
+&lt;p&gt;SELECT(E $\rightarrow$ T E&amp;rsquo;)=FIRST(T)={ ( , i }&lt;br&gt;
+SELECT(E&amp;rsquo; $\rightarrow$ + T E&amp;rsquo;)={ + }&lt;br&gt;
+SELECT(E&amp;rsquo; $\rightarrow$ $\epsilon$)=FOLLOW(E&amp;rsquo;)={$ , ) }&lt;br&gt;
+SELECT(T $\rightarrow$ F T&amp;rsquo;)=FIRST(F)={ ( , i }&lt;br&gt;
+SELECT(T&amp;rsquo; $\rightarrow$ * F T&amp;rsquo;)={ * }&lt;br&gt;
+SELECT(T&amp;rsquo; $\rightarrow$ $\epsilon$)=FOLLOW(T&amp;rsquo;)={ + , $ , ) }&lt;br&gt;
+SELECT(F $\rightarrow$ ( E ))={ ( }&lt;br&gt;
+SELECT(F $\rightarrow$ i)={ i }&lt;/p&gt;
+&lt;p&gt;分析表：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;(&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;)&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;i&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;+&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;*&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;$&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E→TE&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E→TE&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→ε&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→+TE&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→ε&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→ε&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→ε&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→*FT&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→ε&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→(E)&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;对输入串 i*i+i 的分析过程：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;栈&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;输入串&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;输出&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E→TE&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F*&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;*i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→*FT&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→$\epsilon$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T+&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;+i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→+TE&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;F&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T→FT&#39;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&amp;rsquo;i&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;i$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;F→i&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&amp;rsquo;T&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$E&#39;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;T&amp;rsquo;→$\epsilon$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;E&amp;rsquo;→$\epsilon$&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+        </item>
+        <item>
+        <title>正规式 正规文法</title>
+        <link>https://megumi8821.netlify.app/p/%E6%AD%A3%E8%A7%84%E5%BC%8F-%E6%AD%A3%E8%A7%84%E6%96%87%E6%B3%95/</link>
+        <pubDate>Wed, 10 Dec 2025 11:40:52 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E6%AD%A3%E8%A7%84%E5%BC%8F-%E6%AD%A3%E8%A7%84%E6%96%87%E6%B3%95/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 正规式 正规文法" /&gt;&lt;h2 id=&#34;正规文法&#34;&gt;正规文法
+&lt;/h2&gt;&lt;p&gt;$A \rightarrow aB$ 或 $A \rightarrow a$&lt;/p&gt;
+&lt;p&gt;推出“1 个终结符+非终结符”或“1 个终结符”。&lt;/p&gt;
+&lt;h2 id=&#34;正规式-rightarrow-正规文法&#34;&gt;正规式 $\rightarrow$ 正规文法
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;$A \rightarrow x|y \Rightarrow A \rightarrow x, A \rightarrow y$&lt;/li&gt;
+&lt;li&gt;$A \rightarrow xy \Rightarrow A \rightarrow xB, B \rightarrow y$&lt;/li&gt;
+&lt;li&gt;$A \rightarrow x^*y \Rightarrow A \rightarrow xA, A \rightarrow y$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;正规文法-rightarrow-正规式&#34;&gt;正规文法 $\rightarrow$ 正规式
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;$A \rightarrow xB, B \rightarrow y \Rightarrow A = xy$&lt;/li&gt;
+&lt;li&gt;$A \rightarrow xA|y \Rightarrow A = x^*y$&lt;/li&gt;
+&lt;li&gt;$A \rightarrow x, A \rightarrow y \Rightarrow A = x|y$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;nfa-状态图&#34;&gt;NFA 状态图
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://code84.com/wp-content/uploads/2022/09/3484dd1992226c79c2568db8a1f134e8.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;$e.g. (\epsilon|a)b^*$&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://uploadfiles.nowcoder.com/images/20190725/2967044_1564048193370_2F77148314F59B0408830673A9ED4CE6&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;nfa-转-dfa&#34;&gt;NFA 转 DFA
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;求初态闭包：以 NFA 初态为起点，经 $\epsilon$ 边可达的所有状态构成 DFA 初态；&lt;/li&gt;
+&lt;li&gt;对每个 DFA 状态，遍历所有输入符号：
 &lt;ul&gt;
-&lt;li&gt;Token
+&lt;li&gt;先求该状态的“符号转移集”（沿符号边可达的 NFA 状态）；&lt;/li&gt;
+&lt;li&gt;再求转移集的 $\epsilon$ 闭包，得到新的 DFA 状态；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;重复步骤 2，直到无新 DFA 状态生成；&lt;/li&gt;
+&lt;li&gt;标记含 NFA 终态的 DFA 状态为终态。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$e.g. a(a|b)^*$&lt;/p&gt;
+&lt;p&gt;NFA:
+&lt;img src=&#34;https://uploadfiles.nowcoder.com/images/20220320/170531835_1647752631842/D2B5CA33BD970F64A6301FA75AE2EB22&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;a&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;b&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{0, 1, 2, 3, 7}&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 4, 6, 7}&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 5, 6, 7}&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 4, 6, 7}&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 4, 6, 7}&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 5, 6, 7}&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 5, 6, 7}&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 4, 6, 7}&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;{1, 2, 3, 5, 6, 7}&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;DFA:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://uploadfiles.nowcoder.com/images/20220320/170531835_1647752978037/D2B5CA33BD970F64A6301FA75AE2EB22&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;最小化-dfa&#34;&gt;最小化 DFA
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;划分初始状态集：
 &lt;ul&gt;
-&lt;li&gt;标识符（变量名、函数名）&lt;/li&gt;
-&lt;li&gt;关键字（if、for）&lt;/li&gt;
-&lt;li&gt;常量（数字、字符串）&lt;/li&gt;
-&lt;li&gt;运算符（+、-、*、/）&lt;/li&gt;
-&lt;li&gt;分隔符（,、;）&lt;/li&gt;
+&lt;li&gt;终态集（双圈）&lt;/li&gt;
+&lt;li&gt;非终态集&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;对每个状态集，检查每个输入符号的转移目标是否在同一状态集内，若存在状态转移目标分属不同子集，则按转移目标的差异划分子集。&lt;/li&gt;
+&lt;li&gt;重复步骤 2，直到无法再划分；&lt;/li&gt;
+&lt;li&gt;每个状态集合并为 DFA 的一个状态，转移关系继承自原 DFA。含原 DFA 终态的合并状态，标记为最小 DFA 的终态。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$e.g. a(a|b)^*$&lt;/p&gt;
+&lt;p&gt;DFA:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://uploadfiles.nowcoder.com/images/20220320/170531835_1647752978037/D2B5CA33BD970F64A6301FA75AE2EB22&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;终态集：{A, B, C}，非终态集：$\emptyset$&lt;/p&gt;
+&lt;p&gt;划分后，终态集：{A}，非终态集：$\emptyset$&lt;/p&gt;
+&lt;p&gt;最小化 DFA:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://uploadfiles.nowcoder.com/images/20220321/170531835_1647831313067/D2B5CA33BD970F64A6301FA75AE2EB22&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>文法 语法树 短语</title>
+        <link>https://megumi8821.netlify.app/p/%E6%96%87%E6%B3%95-%E8%AF%AD%E6%B3%95%E6%A0%91-%E7%9F%AD%E8%AF%AD/</link>
+        <pubDate>Tue, 09 Dec 2025 19:40:40 +0800</pubDate>
+        
+        <guid>https://megumi8821.netlify.app/p/%E6%96%87%E6%B3%95-%E8%AF%AD%E6%B3%95%E6%A0%91-%E7%9F%AD%E8%AF%AD/</guid>
+        <description>&lt;img src="https://megumi8821.netlify.app/img/PrincipleofCompile.svg" alt="Featured image of post 文法 语法树 短语" /&gt;&lt;h2 id=&#34;概念&#34;&gt;概念
+&lt;/h2&gt;&lt;h3 id=&#34;文法&#34;&gt;文法
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;句型：由“ $\rightarrow$ ” 推导出的符号串。&lt;/li&gt;
+&lt;li&gt;句子：句型中只含有终结符。
+&lt;ul&gt;
+&lt;li&gt;终结符：小写字母、+、-、*、/、=和标点符号。
+&lt;ul&gt;
+&lt;li&gt;非终结符：大写字母和尖括号&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;包裹的符号。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;输出：Token 序列&lt;/p&gt;
-&lt;h2 id=&#34;语法分析&#34;&gt;语法分析
-&lt;/h2&gt;&lt;p&gt;根据语言的语法规则，将 Token 序列组织成抽象语法树（AST，Abstract Syntax Tree）。&lt;/p&gt;
-&lt;p&gt;输出：抽象语法树（AST）或语法树&lt;/p&gt;
-&lt;h2 id=&#34;语义分析&#34;&gt;语义分析
-&lt;/h2&gt;&lt;p&gt;检查 AST 是否符合语言的语义规则，确保代码逻辑合法。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;检查内容
-&lt;ul&gt;
-&lt;li&gt;类型匹配（整数和字符串不能直接相加、函数参数类型不匹配）&lt;/li&gt;
-&lt;li&gt;作用域检查（局部变量跨作用域访问）&lt;/li&gt;
-&lt;li&gt;标识符定义（使用未声明的变量、重复定义）&lt;/li&gt;
-&lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;输出：标注语义信息的 AST&lt;/p&gt;
-&lt;h2 id=&#34;中间代码生成&#34;&gt;中间代码生成
-&lt;/h2&gt;&lt;p&gt;将语义正确的 AST 转换为中间代码（Intermediate Representation，IR），降低目标代码生成的复杂度。&lt;/p&gt;
+&lt;li&gt;语言 L（G）：一切句子的集合。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;短语&#34;&gt;短语
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;短语：所有非终结符的所有子树的叶子节点按顺序连接的符号串。&lt;/li&gt;
+&lt;li&gt;直接短语：一步推导的短语。&lt;/li&gt;
+&lt;li&gt;句柄：最左边的直接短语。&lt;/li&gt;
+&lt;li&gt;素短语：至少含有 1 个终结符且除自身外不再含有更小的素短语。&lt;/li&gt;
+&lt;li&gt;最左素短语：最左边的素短语。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;最左推导&#34;&gt;最左推导
+&lt;/h2&gt;&lt;p&gt;每次优先选择句型中最左侧的非终结符进行替换，逐步推导出句子的过程。&lt;/p&gt;
+&lt;h2 id=&#34;最右推导规范推导&#34;&gt;最右推导（规范推导）
+&lt;/h2&gt;&lt;p&gt;每次优先选择句型中最右侧的非终结符进行替换，推导顺序与语法分析中的归约过程相反。&lt;/p&gt;
+&lt;h2 id=&#34;语法推导树&#34;&gt;语法推导树
+&lt;/h2&gt;&lt;p&gt;以文法的开始符号为根节点、非终结符为中间节点、终结符为叶节点，直观反映句子从开始符号经规则替换逐步生成过程的树形结构。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;常见中间代码形式
-&lt;ul&gt;
-&lt;li&gt;三地址码（Three-Address Code）&lt;/li&gt;
-&lt;li&gt;四元式&lt;/li&gt;
-&lt;li&gt;逆波兰式&lt;/li&gt;
+&lt;li&gt;二义性文法：存在至少一个句子，对应两种及以上不同语法推导树。&lt;/li&gt;
+&lt;li&gt;无二义性文法：所有句子都只有唯一的语法推导树。&lt;/li&gt;
+&lt;li&gt;二义性是文法属性。一个存在二义性的文法，可以通过修改规则变成无二义性的文法。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;输出：中间代码序列&lt;/p&gt;
-&lt;h2 id=&#34;中间代码优化&#34;&gt;中间代码优化
-&lt;/h2&gt;&lt;p&gt;对中间代码进行优化，提高代码执行效率，减少资源消耗。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;优化技术
-&lt;ul&gt;
-&lt;li&gt;常量折叠（Constant Folding）&lt;/li&gt;
-&lt;li&gt;死代码消除（Dead Code Elimination）&lt;/li&gt;
-&lt;li&gt;循环优化（Loop Optimization）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;输出：优化后的中间代码&lt;/p&gt;
-&lt;h2 id=&#34;目标代码生成&#34;&gt;目标代码生成
-&lt;/h2&gt;&lt;p&gt;将中间代码转换为目标机器代码（Machine Code）或汇编代码，再通过汇编器转化为机器指令。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;操作
-&lt;ul&gt;
-&lt;li&gt;指令选择&lt;/li&gt;
-&lt;li&gt;寄存器分配&lt;/li&gt;
-&lt;li&gt;指令调度&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;输出：目标机器的汇编代码或二进制目标文件&lt;/p&gt;
-&lt;h2 id=&#34;目标代码优化&#34;&gt;目标代码优化
-&lt;/h2&gt;&lt;p&gt;对生成的目标代码进行进一步优化，提高执行效率和减少内存占用。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;优化技术
-&lt;ul&gt;
-&lt;li&gt;指令重排&lt;/li&gt;
-&lt;li&gt;寄存器复用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;输出：优化后的目标代码&lt;/p&gt;
 </description>
         </item>
         <item>
